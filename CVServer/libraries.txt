@@ -1,0 +1,15 @@
+python==3.8.8
+opencv-python==4.1.2.30
+PyMuPDF==1.21.1
+python-docx==0.8.11
+
+
+1. Install tesseract using windows installer available at: https://github.com/UB-Mannheim/tesseract/wiki
+
+2. Note the tesseract path from the installation. Default installation path at the time of this edit was: C:\Users\USER\AppData\Local\Tesseract-OCR. It may change so please check the installation path.
+
+3. pip install pytesseract
+
+4. Set the tesseract path in the script before calling image_to_string:
+
+pytesseract.pytesseract.tesseract_cmd = r'C:\Users\USER\AppData\Local\Tesseract-OCR\tesseract.exe' fdg

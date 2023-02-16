@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 
 
 /**
- *
+ * Класс сервлета, через который осуществляется взаимодействие клиента и сервера в проекте.
  */
 @WebServlet("/handler")
 public class MainServlet extends HttpServlet {
