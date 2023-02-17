@@ -26,7 +26,7 @@ public class MainServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         customers = new ArrayList<>();
-        customers.add(new Customer("Егор", "Печенин", "e@mai.ru"));
+        customers.add(new Customer("Егор", "Печенин", "username", "1234sdfsa","e@mai.ru"));
         log("Method init =)");
     }
 
@@ -81,7 +81,7 @@ public class MainServlet extends HttpServlet {
         if (!violations.isEmpty()) {
             return "/";
         } else {
-            return "/WEB-INF/views/customerinfo.jsp";
+            return "/webapp/MainServicePage.html";
         }
     }
 
@@ -99,11 +99,15 @@ public class MainServlet extends HttpServlet {
 
         private final String firstName;
         private final String lastName;
+        private final String userName;
+        private final String password;
         private final String email;
 
-        private RequestCustomer(String firstName, String lastName, String email) {
+        private RequestCustomer(String firstName, String lastName, String userName, String password, String email) {
             this.firstName = firstName;
             this.lastName = lastName;
+            this.userName = lastName;
+            this.password = password;
             this.email = email;
         }
 
@@ -111,12 +115,16 @@ public class MainServlet extends HttpServlet {
             return new RequestCustomer(
                     request.getParameter("firstname"),
                     request.getParameter("lastname"),
+                    request.getParameter("username"),
+                    request.getParameter("password"),
                     request.getParameter("email"));
         }
 
         public void setAsRequestAttributes(HttpServletRequest request) {
             request.setAttribute("firstname", firstName);
             request.setAttribute("lastname", lastName);
+            request.setAttribute("username", userName);
+            request.setAttribute("password", password);
             request.setAttribute("email", email);
         }
 
@@ -127,6 +135,12 @@ public class MainServlet extends HttpServlet {
             }
             if (!StringValidator.validate(lastName)) {
                 violations.add("Last Name is mandatory");
+            }
+            if (!StringValidator.validate(userName)) {
+                violations.add("username is mandatory");
+            }
+            if (!StringValidator.validate(password)) {
+                violations.add("Password is mandatory");
             }
             if (!EmailValidator.validate(email)) {
                 violations.add("Email must be a well-formed address");
