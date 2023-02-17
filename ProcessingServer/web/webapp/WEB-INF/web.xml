@@ -4,12 +4,29 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <display-name>Recognizing processing server</display-name>
-<!--    <servlet>-->
-<!--        <servlet-name>MainServlet</servlet-name>-->
-<!--        <servlet-class>MainServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>MainServlet</servlet-name>-->
-<!--        <url-pattern>/my-servlet</url-pattern>-->
-<!--    </servlet-mapping>-->
+<!--    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>MainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/my-servlet</url-pattern>
+    </servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <jsp-file>/webapp/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/webapp/index</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>First</servlet-name>
+        <jsp-file>/webapp/first.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>First</servlet-name>
+        <url-pattern>/webapp/first</url-pattern>
+    </servlet-mapping>
 </web-app>
