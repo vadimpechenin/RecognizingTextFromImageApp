@@ -13,8 +13,8 @@ public class User extends ObjectWithID {
     @Column(name = "surname")
     public String surname;
 
-    @Column(name = "emal")
-    public String emal;
+    @Column(name = "email")
+    public String email;
 
     @Column(name = "username")
     public String username;

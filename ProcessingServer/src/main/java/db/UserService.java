@@ -27,15 +27,15 @@ public class UserService implements EntityService{
             int g = 0;
             //session.get(User.class,);
             //объект-конструктор запросов для Criteria API
-            CriteriaBuilder cb = session.getCriteriaBuilder(); //не использовать session.createCriteria
+            /*CriteriaBuilder cb = session.getCriteriaBuilder(); //не использовать session.createCriteria
 
             CriteriaQuery cq = cb.createQuery(User.class);
 
             Root<User> root = cq.from(User.class); // аналог From в sql
             cq.select(root);
             Query query = session.createQuery(cq);
-            users =query.getResultList();
-            //users = session.createQuery("SELECT row FROM User row", User.class).list();
+            users =query.getResultList();*/
+            users = session.createQuery("SELECT row FROM User row", User.class).list();
             session.close();
             return users;
         } catch (Exception e) {

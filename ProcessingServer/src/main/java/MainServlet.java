@@ -27,7 +27,6 @@ import java.util.List;
 public class MainServlet extends HttpServlet {
 
     private List<Customer> customers;
-    private Session session;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
