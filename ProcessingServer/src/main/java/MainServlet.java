@@ -1,3 +1,4 @@
+import db.HibernateSessionFactory;
 import entities.Customer;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
@@ -6,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.hibernate.Session;
 import validators.EmailValidator;
 import validators.StringValidator;
 
@@ -17,6 +19,7 @@ import java.util.List;
 
 /**
  * Класс сервлета, через который осуществляется взаимодействие клиента и сервера в проекте.
+ *
  */
 @WebServlet(name = "MainServlet", urlPatterns = "/handler")
 public class MainServlet extends HttpServlet {
@@ -25,6 +28,12 @@ public class MainServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        //Запуск сессии
+        try {
+            Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        }catch (Exception e){
+            System.out.println("Сессия не открылась");
+        }
         customers = new ArrayList<>();
         customers.add(new Customer("Егор", "Печенин", "username", "1234sdfsa","e@mai.ru"));
         log("Method init =)");
