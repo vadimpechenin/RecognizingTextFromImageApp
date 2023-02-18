@@ -4,9 +4,10 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/sberHibernate</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/rti</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">mapr</property>
+
         <property name="show_sql">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
     </session-factory>
