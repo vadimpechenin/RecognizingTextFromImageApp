@@ -7,18 +7,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Users")
 public class User extends ObjectWithID {
-    @Column(name = "Name")
+    @Column(name = "name")
     public String name;
 
-    @Column(name = "Surname")
+    @Column(name = "surname")
     public String surname;
 
-    @Column(name = "Emal")
+    @Column(name = "emal")
     public String emal;
 
-    @Column(name = "Username")
+    @Column(name = "username")
     public String username;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     public String password;
 }

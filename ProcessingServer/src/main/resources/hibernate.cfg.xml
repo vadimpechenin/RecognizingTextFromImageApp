@@ -9,5 +9,10 @@
         <property name="hibernate.connection.password">mapr</property>
         <property name="show_sql">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <mapping class="dbclasses.User"/>
+        <mapping class="dbclasses.Role"/>
+        <mapping class="dbclasses.UserRole"/>
+        <mapping class="dbclasses.Document"/>
     </session-factory>
 </hibernate-configuration>

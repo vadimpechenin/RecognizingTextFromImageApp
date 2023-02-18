@@ -9,6 +9,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class ObjectWithID implements Serializable {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     public String id;
 }

@@ -7,6 +7,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Roles")
 public class Role extends ObjectWithID {
-    @Column(name = "Role")
+    @Column(name = "role")
     public String role;
 }

@@ -1,4 +1,6 @@
 import db.HibernateSessionFactory;
+import db.UserService;
+import dbclasses.User;
 import entities.Customer;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
@@ -31,10 +33,16 @@ public class MainServlet extends HttpServlet {
         super.init(config);
         //Запуск сессии
         try {
-            session = HibernateSessionFactory.getSessionFactory().openSession();
+            UserService userService = new UserService(HibernateSessionFactory.getSessionFactory());
+            List<User> users = userService.findAll();
+            for (User user: users){
+                System.out.println("user = " + user.name);
+            }
         }catch (Exception e){
             System.out.println("Сессия не открылась");
         }
+
+
         customers = new ArrayList<>();
         customers.add(new Customer("Егор", "Печенин", "username", "1234sdfsa","e@mai.ru"));
         log("Method init =)");
