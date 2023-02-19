@@ -13,7 +13,7 @@ public abstract class ObjectWithID implements Serializable {
     private String id;
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {

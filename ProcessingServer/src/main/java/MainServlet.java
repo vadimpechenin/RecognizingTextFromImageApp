@@ -1,3 +1,6 @@
+import core.interaction.RequestExtractor;
+import core.interaction.RequestHandler;
+import core.interaction.ResponsePacker;
 import db.HibernateSessionFactory;
 import db.UserService;
 import dbclasses.User;
@@ -9,14 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.Session;
 import validators.EmailValidator;
 import validators.StringValidator;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -26,7 +29,29 @@ import java.util.List;
 @WebServlet(name = "MainServlet", urlPatterns = "/handler")
 public class MainServlet extends HttpServlet {
 
-    private List<Customer> customers;
+
+    private static class HandlerInfo {
+        RequestHandler requestHandler;
+        RequestExtractor requestExtractor;
+        ResponsePacker responsePacker;
+
+        public HandlerInfo(RequestHandler handler, RequestExtractor requestExtractor, ResponsePacker responsePacker) {
+            this.requestHandler = handler;
+            this.requestExtractor = requestExtractor;
+            this.responsePacker = responsePacker;
+        }
+    }
+
+    private volatile Boolean isInitialized;
+    private final Object isInitializedLock = new Object();
+    private final Map<String, HandlerInfo> handlers;
+    private MainServletEnvironment environment;
+
+    public MainServlet() {
+        handlers = new HashMap<>();
+    }
+
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -40,10 +65,6 @@ public class MainServlet extends HttpServlet {
         }catch (Exception e){
             System.out.println("Сессия не открылась");
         }
-
-
-        customers = new ArrayList<>();
-        customers.add(new Customer("Егор", "Печенин", "username", "1234sdfsa","e@mai.ru"));
         log("Method init =)");
     }
 
@@ -61,21 +82,6 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doGet(req, resp);
-        /*     resp.setContentType("text/html");
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write("Hello!");
-        printWriter.close();
-        resp.setStatus(200);*/
-
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.println("<html>");
-        printWriter.println("<h1>Hello!</h1>");
-        printWriter.println("</html>");
-
-        //redirect
-        //resp.sendRedirect("/ProcessingServer/testtt.html");
-        //forward
         RequestDispatcher dispatcher = req.getRequestDispatcher("/testtt.html");
         dispatcher.forward(req, resp);
     }

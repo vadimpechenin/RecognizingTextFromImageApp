@@ -11,6 +11,10 @@ import org.hibernate.SessionFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Сервис для работы с сущностью User, удалить как завершится SecurityManagerService
+ */
 public class UserService implements EntityService{
     private final SessionFactory sessionFactory;
 

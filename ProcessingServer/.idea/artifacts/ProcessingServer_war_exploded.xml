@@ -39,6 +39,9 @@
           <element id="library" level="project" name="Maven: com.sun.istack:istack-commons-runtime:4.0.1" />
           <element id="library" level="project" name="Maven: jakarta.inject:jakarta.inject-api:2.0.0" />
           <element id="library" level="project" name="Maven: org.antlr:antlr4-runtime:4.10.1" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.12.0" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.10" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.11.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

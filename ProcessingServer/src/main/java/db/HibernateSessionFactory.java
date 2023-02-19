@@ -1,13 +1,7 @@
 package db;
 
-
-import dbclasses.Document;
-import dbclasses.Role;
-import dbclasses.User;
-import dbclasses.UserRole;
+import dbclasses.*;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
@@ -20,7 +14,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class HibernateSessionFactory {
 
-    private static SessionFactory sessionFactory; //настройки и работа с сессиями (фабрика сессий)
+    private static volatile SessionFactory sessionFactory; //настройки и работа с сессиями (фабрика сессий)
 
     private static final Object sessionFactoryLock = new Object();
 
