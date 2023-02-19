@@ -8,5 +8,13 @@ import jakarta.persistence.Table;
 @Table(name = "Roles")
 public class Role extends ObjectWithID {
     @Column(name = "role")
-    public String role;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

@@ -8,8 +8,24 @@ import jakarta.persistence.Table;
 @Table(name = "UserRoles")
 public class UserRole extends ObjectWithID {
     @Column(name = "userid")
-    public String userID;
+    private String userID;
 
     @Column(name = "roleid")
-    public String roleID;
+    private String roleID;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
+    }
 }

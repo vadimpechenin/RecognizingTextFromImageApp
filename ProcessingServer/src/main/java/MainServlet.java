@@ -35,7 +35,7 @@ public class MainServlet extends HttpServlet {
             UserService userService = new UserService(HibernateSessionFactory.getSessionFactory());
             List<User> users = userService.findAll();
             for (User user: users){
-                System.out.println("user = " + user.name);
+                System.out.println("user = " + user.getName());
             }
         }catch (Exception e){
             System.out.println("Сессия не открылась");

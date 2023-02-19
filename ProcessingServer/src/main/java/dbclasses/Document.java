@@ -9,14 +9,46 @@ import jakarta.persistence.Table;
 public class Document extends ObjectWithID {
 
     @Column(name = "userid")
-    public String userID;
+    private String userID;
 
     @Column(name = "title")
-    public String title;
+    private String title;
 
     @Column(name = "filepdf")
-    public byte[] filepdf;
+    private byte[] filepdf;
 
     @Column(name = "filetxt")
-    public byte[] filetxt;
+    private byte[] filetxt;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public byte[] getFilepdf() {
+        return filepdf;
+    }
+
+    public void setFilepdf(byte[] filepdf) {
+        this.filepdf = filepdf;
+    }
+
+    public byte[] getFiletxt() {
+        return filetxt;
+    }
+
+    public void setFiletxt(byte[] filetxt) {
+        this.filetxt = filetxt;
+    }
 }

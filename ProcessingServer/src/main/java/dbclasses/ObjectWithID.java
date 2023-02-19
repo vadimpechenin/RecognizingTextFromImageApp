@@ -10,5 +10,13 @@ import java.io.Serializable;
 public abstract class ObjectWithID implements Serializable {
     @Id
     @Column(name = "id")
-    public String id;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
