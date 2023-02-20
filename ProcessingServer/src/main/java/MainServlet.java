@@ -2,6 +2,7 @@ import classes.RequestCode;
 import core.interaction.*;
 import handlers.SessionHandler;
 import handlers.UsersInfoHandler;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ import java.util.Map;
  * Класс сервлета, через который осуществляется взаимодействие клиента и сервера в проекте.
  *
  */
-@WebServlet(name = "MainServlet", urlPatterns = "/static/handler")
+@WebServlet(name = "MainServlet", urlPatterns = "/handler")
 public class MainServlet extends HttpServlet {
 
 

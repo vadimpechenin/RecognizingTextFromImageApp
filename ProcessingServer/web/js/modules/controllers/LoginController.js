@@ -23,7 +23,7 @@ export default class LoginController {
     }
 
     static #onAuthorizationPassed(){
-        document.location.href = 'list.html';
+        document.location.href = '../ProcessingServer/MainServicePage.html';
     }
 
     static #onAuthorizationFailed(){

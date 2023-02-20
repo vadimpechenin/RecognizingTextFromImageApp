@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <script src="js/3rdparty/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="js/3rdparty/blueimp-md5/md5.min.js"></script>
+    <script src="js/page/loginform.js" type="module"></script>
+</head>
+<body style="margin: 0; height:100%; overflow: hidden;">
+    <form>
+        <div id='LoginForm'>
+            <label>Last Name:</label>
+            <input type="text" name="UserName" id="UserName" value="fedor" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="Password" id="Password" value="123asd" required>
+        </div>
+    <span style='display:block; height:5px;'></span>
+    <button type='button' id='OkButton'>Войти</button>
+    <span style='display:inline-block; width:5px;'></span>
+    <button type='button' id='CancelButton'>Отмена</button>
+    </form>
+</body>
+</html>
