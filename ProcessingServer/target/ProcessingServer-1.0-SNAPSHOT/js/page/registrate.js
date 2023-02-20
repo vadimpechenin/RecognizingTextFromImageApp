@@ -1,7 +1,5 @@
-let forma = document.forms["loginform"];
-//
-//let lastname = document.getElementById("lastname");
-//let email = document.getElementById("email");
+let forma = document.forms["retistrate"];
+
 forma.addEventListener("submit", function(e){
     e.preventDefault();
     let firstname = document.getElementById("firstname");

@@ -1,6 +1,6 @@
 package core.securityManager;
 
 public class SecurityManagerConstants {
-    public static final String AdminRoleName = "Admin";
-    public static final String UserRoleName = "User";
+    public static final String AdminRoleName = "ADMIN";
+    public static final String UserRoleName = "USER";
 }

@@ -1,24 +1,16 @@
-import core.interaction.RequestExtractor;
-import core.interaction.RequestHandler;
-import core.interaction.ResponsePacker;
-import db.HibernateSessionFactory;
-import db.UserService;
-import dbclasses.User;
-import entities.Customer;
-import jakarta.servlet.RequestDispatcher;
+import classes.RequestCode;
+import core.interaction.*;
+import handlers.SessionHandler;
+import handlers.UsersInfoHandler;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import validators.EmailValidator;
-import validators.StringValidator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -26,7 +18,7 @@ import java.util.Map;
  * Класс сервлета, через который осуществляется взаимодействие клиента и сервера в проекте.
  *
  */
-@WebServlet(name = "MainServlet", urlPatterns = "/handler")
+@WebServlet(name = "MainServlet", urlPatterns = "/static/handler")
 public class MainServlet extends HttpServlet {
 
 
@@ -56,7 +48,7 @@ public class MainServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         //Запуск сессии
-        try {
+     /*   try {
             UserService userService = new UserService(HibernateSessionFactory.getSessionFactory());
             List<User> users = userService.findAll();
             for (User user: users){
@@ -64,14 +56,48 @@ public class MainServlet extends HttpServlet {
             }
         }catch (Exception e){
             System.out.println("Сессия не открылась");
+        }*/
+        if(isInitialized == null) {
+            synchronized(isInitializedLock) {
+                if(isInitialized == null) {
+                    isInitialized = initializeImpl();
+                }
+            }
         }
         log("Method init =)");
     }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IOException {
-        super.service(req, resp);
-        resp.getWriter().write("Method service\n");
+    protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException, IOException {
+        String command = null;
+        try {
+            if (isInitialized) {
+                command = httpServletRequest.getParameter("cmd");
+                HandlerInfo handlerInfo = handlers.get(command);
+                if (handlerInfo != null) {
+                    Request request = handlerInfo.requestExtractor.extract(httpServletRequest);
+                    InnerResponseRecipient responseRecipient = new InnerResponseRecipient();
+                    handlerInfo.requestHandler.executeRequest(responseRecipient, request);
+                    handlerInfo.responsePacker.pack(request, responseRecipient.response, httpServletRequest, httpServletResponse);
+                } else {
+                    handleError(httpServletResponse, "templates/CommandNotSupported.html");
+                }
+            } else {
+                handleError(httpServletResponse, "templates/InitializationFailed.html");
+            }
+        } catch (Exception e) {
+            System.out.printf("Команда не поддерживается, код %s", command);
+            handleError(httpServletResponse, "templates/ExceptionOccur.html");
+            e.printStackTrace();
+        }
+
+        //super.service(httpServletRequest, httpServletResponse);
+        //httpServletResponse.getWriter().write("Method service\n");
+    }
+
+    private void handleError(HttpServletResponse httpServletResponse, String errorTemplate) throws IOException {
+        String pageText = environment.resourceManager.getResource(errorTemplate);
+        HttpServletResponseBuilder.onStringResponse(httpServletResponse, HttpServletResponse.SC_BAD_REQUEST, HttpServletResponseBuilder.HTMLContentType, pageText);
     }
 
     @Override
@@ -80,7 +106,34 @@ public class MainServlet extends HttpServlet {
         log("Method desctoy =)");
     }
 
-    @Override
+    private boolean initializeImpl() {
+        boolean result;
+        try {
+            environment = MainServletEnvironment.create();
+            result = environment != null;
+
+            if (result) {
+                RequestHandler sessionHandler = new SessionHandler(environment.sessionManager, environment.securityManager);
+                register(RequestCode.SESSION_OPEN, sessionHandler, environment.editContentRequestExtractor, environment.sessionOpenResponsePacker);
+                register(RequestCode.SESSION_CLOSE, sessionHandler, environment.baseRequestExtractor, environment.sessionCloseResponsePacker);
+
+                RequestHandler usersInfoHandler = new UsersInfoHandler(environment.sessionManager, environment.securityManager);
+                register(RequestCode.USERS_INFO, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
+                register(RequestCode.CURRENT_USER_INFO, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+
+        return result;
+    }
+
+    private void register(RequestCode code, RequestHandler handler, RequestExtractor requestExtractor, ResponsePacker responsePacker) {
+        handlers.put(code.toString(), new HandlerInfo(handler, requestExtractor, responsePacker));
+    }
+
+    /*@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/testtt.html");
         dispatcher.forward(req, resp);
@@ -170,5 +223,8 @@ public class MainServlet extends HttpServlet {
             }
             return violations;
         }
-    }
+    }*/
+
+
+
 }
