@@ -59,7 +59,7 @@ public class SecurityManager {
     public String logOn(String login, String password) {
         String finalLogin = login.trim().toLowerCase();
         String finalPassword = password.trim();
-        return data.users.stream().filter(x -> x.getUsername().toLowerCase().equals(finalLogin) && Objects.equals(x.getPassword(), finalPassword)).map(x -> x.getId()).findFirst().orElse(null);
+        return data.users.stream().filter(x -> x.getUsername().toLowerCase().equals(finalLogin) && Objects.equals(x.getPassword(), finalPassword)).map(ObjectWithID::getId).findFirst().orElse(null);
     }
 
     public List<User> getUsers(String currentSessionID, String[] ids) {

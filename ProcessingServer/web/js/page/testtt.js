@@ -13,7 +13,7 @@ function onError(){
 }
 
 function onLoginSuccess(){
-    document.location.href = 'static/MainServicePage.html';
+    document.location.href = '../static/MainServicePage.html';
 }
 
 $(document).ready(run);

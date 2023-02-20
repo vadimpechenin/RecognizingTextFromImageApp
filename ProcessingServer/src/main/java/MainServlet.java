@@ -90,7 +90,7 @@ public class MainServlet extends HttpServlet {
             handleError(httpServletResponse, "templates/ExceptionOccur.html");
             e.printStackTrace();
         }
-
+        log("Method service =)");
         //super.service(httpServletRequest, httpServletResponse);
         //httpServletResponse.getWriter().write("Method service\n");
     }
