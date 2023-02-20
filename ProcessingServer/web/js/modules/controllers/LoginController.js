@@ -9,6 +9,7 @@ export default class LoginController {
     init() {
         CommonUtils.getContainer('OkButton').click(this.#onOk.bind(this));
         CommonUtils.getContainer('CancelButton').click(LoginController.#onCancel.bind(this));
+        CommonUtils.getContainer('ExitButton').click(LoginController.#onExit.bind(this));
     }
 
     #onOk(){
@@ -20,6 +21,10 @@ export default class LoginController {
     static #onCancel(){
         CommonUtils.getContainer('UserName').val('');
         CommonUtils.getContainer('Password').val('');
+    }
+
+    static #onExit(){
+        document.location.href = '../ProcessingServer/startform.html';
     }
 
     static #onAuthorizationPassed(){
