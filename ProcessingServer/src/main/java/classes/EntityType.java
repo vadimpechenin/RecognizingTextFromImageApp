@@ -1,5 +1,6 @@
 package classes;
 
 public enum EntityType {
-    GetDocumentsOfUser
+    GetDocumentsOfUser,
+    GetNewUserEntity
 }

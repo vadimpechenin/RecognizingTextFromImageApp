@@ -1,5 +1,7 @@
 package core.interaction.responsePackers;
 
+import core.interaction.requests.EntityRequest;
+import dbclasses.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -30,7 +32,13 @@ public class SessionOpenResponsePacker implements ResponsePacker {
 
             status = HttpServletResponse.SC_OK;
             pageText = resourceManager.getResource("templates/CommandLoginFound.html");
-            pageText = pageText.replace("%USERNAME%", ((EditContentRequest)request).contentID);
+            if (request instanceof EditContentRequest) {
+                pageText = pageText.replace("%USERNAME%", ((EditContentRequest)request).contentID);
+            }else {
+                EntityRequest entityRequest = ((EntityRequest)request);
+                User newUser = (User) entityRequest.entity;
+                pageText = pageText.replace("%USERNAME%", newUser.getUsername());
+            }
         } else {
             status = HttpServletResponse.SC_NOT_FOUND;
             pageText = resourceManager.getResource("templates/CommandLoginNotFound.html");

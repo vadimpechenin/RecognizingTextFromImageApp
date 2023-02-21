@@ -25,6 +25,7 @@ public class EntityRequestExtractor implements RequestExtractor {
                 .create();
         extractors = new HashMap<>();
         extractors.put(EntityType.GetDocumentsOfUser.toString(), new GetDocumentsOfUserEntityExtractor(gson));
+        extractors.put(EntityType.GetNewUserEntity.toString(), new GetNewUserEntityExtractor(gson));
     }
 
     @Override

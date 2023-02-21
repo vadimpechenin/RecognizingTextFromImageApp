@@ -29,4 +29,19 @@ public class SecurityManagerService {
             session.close();
         }
     }
+
+    public void createUser(User user, UserRole userRole) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.persist(user);
+            session.persist(userRole);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
 }

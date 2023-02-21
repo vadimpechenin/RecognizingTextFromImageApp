@@ -1,4 +1,13 @@
-let forma = document.forms["retistrate"];
+import RegistrationController from "../modules/controllers/RegistrationController.js";
+
+function init() {
+    let controller = new RegistrationController();
+    controller.init();
+}
+
+$(document).ready(init);
+
+/*let forma = document.forms["retistrate"];
 
 forma.addEventListener("submit", function(e){
     e.preventDefault();
@@ -18,7 +27,7 @@ forma.addEventListener("submit", function(e){
         password.focus();
         return
     }
-    forma.method = 'POST';
-    forma.action="http://localhost:8080/ProcessingServer/handler"
-    //alert(email.value + " " + lastname.value)
-})
+    //forma.method = 'POST';
+    //forma.action="http://localhost:8080/ProcessingServer/handler"
+})*/
+

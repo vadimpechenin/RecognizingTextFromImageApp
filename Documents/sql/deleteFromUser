@@ -1,0 +1,2 @@
+DELETE FROM public.users
+	WHERE users.id='b783c0a29afb4b129872b38e0e913b31';

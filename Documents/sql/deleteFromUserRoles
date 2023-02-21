@@ -1,0 +1,2 @@
+DELETE FROM public.userroles
+	WHERE userroles.id='484e2e830d8749419fcfb4dfdcd2e318';

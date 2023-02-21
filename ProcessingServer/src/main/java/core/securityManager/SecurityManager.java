@@ -62,6 +62,20 @@ public class SecurityManager {
         return data.users.stream().filter(x -> x.getUsername().toLowerCase().equals(finalLogin) && Objects.equals(x.getPassword(), finalPassword)).map(ObjectWithID::getId).findFirst().orElse(null);
     }
 
+    public void registration(User user) {
+        boolean result = true;
+
+        user.setId(CommonUtils.createID());
+        user.setUsername(user.getUsername().trim().toLowerCase());
+        user.setPassword(user.getPassword().trim());
+
+        UserRole userRole = new UserRole();
+        userRole.setId(CommonUtils.createID());
+        userRole.setUserID(user.getId());
+        userRole.setRoleID(adminRoleID);
+        service.createUser(user, userRole);
+    }
+
     public List<User> getUsers(String currentSessionID, String[] ids) {
         List<User> result = new ArrayList<>();
         Session session = sessionManager.getSession(currentSessionID);

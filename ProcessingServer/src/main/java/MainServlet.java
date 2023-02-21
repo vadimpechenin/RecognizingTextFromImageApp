@@ -121,6 +121,7 @@ public class MainServlet extends HttpServlet {
                 RequestHandler usersInfoHandler = new UsersInfoHandler(environment.sessionManager, environment.securityManager);
                 register(RequestCode.USERS_INFO, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.CURRENT_USER_INFO, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
+                register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityRequestExtractor, environment.sessionOpenResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,34 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LogIn</title>
+    <title>Registration</title>
+    <script src="js/3rdparty/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="js/3rdparty/blueimp-md5/md5.min.js"></script>
+    <script src="js/page/registrate.js" type="module"></script>
 </head>
-
-<body>
-<form name = "LogIn" id="registrate" method="post" action="http://localhost:8080/ProcessingServer/handler">
+<body style="margin: 0; height:100%; overflow: hidden;">
+<form>
     <div>
-        <label for="firstname">First Name : </label>
+        <label>First Name : </label>
         <input type="text" name="firstname" id="firstname" placeholder="Имя" value="Emelian">
     </div>
     <div>
-        <label for="lastname">Last Name:</label>
-        <input type="text" name="lastname" id="lastname" value="Nikifirov">
+        <label>Last Name:</label>
+        <input type="text" name="lastname" id="lastname" placeholder="Фамилия" value="Nikifirov">
     </div>
     <div>
-        <label for="username">Last Name:</label>
-        <input type="text" name="username" id="username" value="niklian">
+        <label>Username:</label>
+        <input type="text" name="UserName" id="UserName" placeholder="логин" value="testuser">
     </div>
     <div>
-        <label for="password">Password:</label>
-        <input type="text" name="password" id="password" value="123sdf">
+        <label>Password:</label>
+        <input type="text" name="Password" id="Password" placeholder="пароль" value="123sdf">
     </div>
     <div>
-        <label for="email">Email: </label>
-        <input type="text" name="email" id="email" value="sdf@gmal.com">
+        <label>Email: </label>
+        <input type="text" name="email" id="email" placeholder="email" value="sdf@gmal.com">
     </div>
-    <button type="submit">Submit</button>
+    <span style='display:block; height:5px;'></span>
+    <button type='button' id='OkButton'>Зарегистрироваться</button>
+    <span style='display:inline-block; width:5px;'></span>
+    <button type='button' id='CancelButton'>Отмена</button>
+    <span style='display:inline-block; width:5px;'></span>
+    <button type='button' id='ExitButton'>Вернуться</button>
 </form>
-<!--<script src = "js/loginform.js"></script>-->
 
 </body>
 </html>
