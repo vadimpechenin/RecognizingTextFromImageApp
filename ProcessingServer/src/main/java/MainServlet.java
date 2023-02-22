@@ -121,7 +121,7 @@ public class MainServlet extends HttpServlet {
                 RequestHandler usersInfoHandler = new UsersInfoHandler(environment.sessionManager, environment.securityManager);
                 register(RequestCode.USERS_INFO, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.CURRENT_USER_INFO, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
-                register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityRequestExtractor, environment.sessionOpenResponsePacker);
+                register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityWithViolationsRequestExtractor, environment.sessionOpenResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,99 +134,5 @@ public class MainServlet extends HttpServlet {
     private void register(RequestCode code, RequestHandler handler, RequestExtractor requestExtractor, ResponsePacker responsePacker) {
         handlers.put(code.toString(), new HandlerInfo(handler, requestExtractor, responsePacker));
     }
-
-    /*@Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/testtt.html");
-        dispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestCustomer customer = RequestCustomer.fromRequestParameters(request);
-        customer.setAsRequestAttributes(request);
-        List<String> violations = customer.validate();
-
-        if (!violations.isEmpty()) {
-            request.setAttribute("violations", violations);
-        }
-
-        String url = determineUrl(violations);
-        forwardResponse(url, request, response);
-    }
-
-    private String determineUrl(List<String> violations) {
-        if (!violations.isEmpty()) {
-            return "/";
-        } else {
-            return "/webapp/MainServicePage.html";
-        }
-    }
-
-    private void forwardResponse(String url, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static class RequestCustomer {
-
-        private final String firstName;
-        private final String lastName;
-        private final String userName;
-        private final String password;
-        private final String email;
-
-        private RequestCustomer(String firstName, String lastName, String userName, String password, String email) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.userName = lastName;
-            this.password = password;
-            this.email = email;
-        }
-
-        public static RequestCustomer fromRequestParameters(HttpServletRequest request) {
-            return new RequestCustomer(
-                    request.getParameter("firstname"),
-                    request.getParameter("lastname"),
-                    request.getParameter("username"),
-                    request.getParameter("password"),
-                    request.getParameter("email"));
-        }
-
-        public void setAsRequestAttributes(HttpServletRequest request) {
-            request.setAttribute("firstname", firstName);
-            request.setAttribute("lastname", lastName);
-            request.setAttribute("username", userName);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-        }
-
-        public List<String> validate() {
-            List<String> violations = new ArrayList<>();
-            if (!StringValidator.validate(firstName)) {
-                violations.add("First Name is mandatory");
-            }
-            if (!StringValidator.validate(lastName)) {
-                violations.add("Last Name is mandatory");
-            }
-            if (!StringValidator.validate(userName)) {
-                violations.add("username is mandatory");
-            }
-            if (!StringValidator.validate(password)) {
-                violations.add("Password is mandatory");
-            }
-            if (!EmailValidator.validate(email)) {
-                violations.add("Email must be a well-formed address");
-            }
-            return violations;
-        }
-    }*/
-
-
 
 }

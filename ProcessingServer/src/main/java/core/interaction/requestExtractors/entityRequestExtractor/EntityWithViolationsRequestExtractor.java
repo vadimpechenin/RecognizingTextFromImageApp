@@ -1,30 +1,30 @@
 package core.interaction.requestExtractors.entityRequestExtractor;
 
+import classes.EntityType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jakarta.servlet.http.HttpServletRequest;
-import classes.EntityType;
 import core.instantGson.InstantGsonDeserializer;
 import core.instantGson.InstantGsonSerializer;
 import core.interaction.Request;
 import core.interaction.RequestExtractor;
-import core.interaction.requests.EntityRequest;
+import core.interaction.requests.EntityWithViolationsRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityRequestExtractor implements RequestExtractor {
+public class EntityWithViolationsRequestExtractor implements RequestExtractor {
     private final Map<String, EntityExtractor> extractors;
 
-    public EntityRequestExtractor() {
+    public EntityWithViolationsRequestExtractor() {
         InstantGsonSerializer instantSerializer = new InstantGsonSerializer(new GsonBuilder().create());
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Instant.class, new InstantGsonDeserializer())
                 .registerTypeAdapter(Instant.class, instantSerializer)
                 .create();
         extractors = new HashMap<>();
-        extractors.put(EntityType.GetDocumentsOfUser.toString(), new GetDocumentsOfUserEntityExtractor(gson));
+        extractors.put(EntityType.GetNewUserEntity.toString(), new GetNewUserEntityExtractor(gson));
     }
 
     @Override
@@ -40,6 +40,6 @@ public class EntityRequestExtractor implements RequestExtractor {
             entity = entityExtractor.extract(entityGson);
         }
 
-        return new EntityRequest(code, sessionID, entityType, entity);
+        return new EntityWithViolationsRequest(code, sessionID, entityType, entity);
     }
 }

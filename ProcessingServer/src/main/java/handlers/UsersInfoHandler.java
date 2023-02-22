@@ -11,12 +11,16 @@ import core.interaction.Response;
 import core.interaction.ResponseRecipient;
 import core.interaction.requests.EditContentRequest;
 import core.interaction.requests.EntityRequest;
+import core.interaction.requests.EntityWithViolationsRequest;
 import core.interaction.responses.ObjectResponse;
 import core.securityManager.SecurityManager;
 import dbclasses.User;
+import validators.EmailValidator;
+import validators.StringValidator;
 
 import java.security.Security;
 import java.time.Clock;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersInfoHandler extends RequestHandlerContainer {
@@ -50,13 +54,23 @@ public class UsersInfoHandler extends RequestHandlerContainer {
     }
 
     private boolean RegistrationUserInfo(ResponseRecipient responseRecipient, Request requestBase) {
-        EntityRequest request = (EntityRequest) requestBase;
+        EntityWithViolationsRequest request = (EntityWithViolationsRequest) requestBase;
         boolean result = false;
         Session session = null;
         String sessionID;
 
         User registrationUser = (User) request.entity;
-        result = registrationNewUser(registrationUser, result);
+
+        List<String> violations = validate(registrationUser);
+
+        if (violations.isEmpty()) {
+            //request.setAttribute("violations", violations);
+            result = registrationNewUser(registrationUser, result);
+        }else{
+            request.setAttribute("violations", violations);
+        }
+
+
         if (!CommonUtils.isNullOrEmpty(registrationUser.getId())&&(result)) {
             session = sessionManager.openSession();
             session.currentUserID = registrationUser.getId();
@@ -70,7 +84,7 @@ public class UsersInfoHandler extends RequestHandlerContainer {
             responseRecipient.ReceiveResponse(response);
         }
 
-        return true;
+        return result;
     }
 
     private boolean registrationNewUser(User entity, boolean result) {
@@ -99,5 +113,25 @@ public class UsersInfoHandler extends RequestHandlerContainer {
             responseRecipient.ReceiveResponse(response);
         }
         return true;
+    }
+
+    public List<String> validate(User user) {
+        List<String> violations = new ArrayList<>();
+        if (!StringValidator.validate(user.getName())){
+            violations.add("Имя не задана");
+        }
+        if (!StringValidator.validate(user.getSurname())) {
+            violations.add("Фамилия не задана");
+        }
+        if (!StringValidator.validate(user.getUsername())) {
+            violations.add("Логин не задан");
+        }
+        if (!StringValidator.validate(user.getPassword())) {
+            violations.add("Пароль не задан");
+        }
+        if (!EmailValidator.validate(user.getEmail())) {
+            violations.add("Email задан некорректно");
+        }
+        return violations;
     }
 }

@@ -1,7 +1,5 @@
 package core.securityManager;
 
-import java.util.Set;
-
 public class UserInfo {
     public final String userID;
     public final boolean isAdmin;

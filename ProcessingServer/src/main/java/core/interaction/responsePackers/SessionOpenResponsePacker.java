@@ -1,6 +1,7 @@
 package core.interaction.responsePackers;
 
 import core.interaction.requests.EntityRequest;
+import core.interaction.requests.EntityWithViolationsRequest;
 import dbclasses.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import core.interaction.ResponsePacker;
 import core.interaction.requests.EditContentRequest;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SessionOpenResponsePacker implements ResponsePacker {
     private final ResourceManager resourceManager;
@@ -41,7 +43,20 @@ public class SessionOpenResponsePacker implements ResponsePacker {
             }
         } else {
             status = HttpServletResponse.SC_NOT_FOUND;
-            pageText = resourceManager.getResource("templates/CommandLoginNotFound.html");
+            EntityWithViolationsRequest entityWithViolationsRequest = ((EntityWithViolationsRequest)request);
+            if (entityWithViolationsRequest.violations==null){
+
+                pageText = resourceManager.getResource("templates/CommandLoginNotFound.html");
+            }else{
+                List<String> violations = entityWithViolationsRequest.violations.get("violations");
+                StringBuilder violationsAll = new StringBuilder();
+                for (String violation:violations){
+                    violationsAll.append(violation).append("; ");
+                }
+                pageText = resourceManager.getResource("templates/RegistrationError.html");
+                pageText = pageText.replace("%USERNAME%", violationsAll);
+            }
+
         }
 
         HttpServletResponseBuilder.onStringResponse(httpServletResponse, status, HttpServletResponseBuilder.HTMLContentType, pageText);
