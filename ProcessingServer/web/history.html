@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Cabinet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <div th:fragment="header">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">История вкладов</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="/">Вернуться на главную</a>
+                <a class="p-2 text-dark" onclick="document.forms['logoutForm'].submit()">Выход</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div sec:authorize="isAuthenticated()">
+            <form id="logoutForm" method="POST" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+
+            <h2>История вкладов пользователя <span sec:authentication="name"></span></h2>
+
+            <h2>Операции: </h2>
+            <div th:each="el : ${allHistory}" class="alert alert-info mt-2">
+                <h3 th:text="${el.id}"/>
+                <p th:text="${el.date}"/>
+                <p th:text="${el.numberOf}"/>
+                <p th:text="${el.numberTo}"/>
+                <p th:text="${el.transferAmount}"/>
+                <p th:text="${el.confirmed}"/>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="header">
+        <footer class="text-muted">
+            <div class="container">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+                <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+                <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our getting started guide</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/3rdparty/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="js/3rdparty/blueimp-md5/md5.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

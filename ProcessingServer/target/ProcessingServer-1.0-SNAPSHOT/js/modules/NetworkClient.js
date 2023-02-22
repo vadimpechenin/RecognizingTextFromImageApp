@@ -47,4 +47,10 @@ export default class NetworkClient {
         let commandParameters = {"type": "GetNewUserEntity", "entity": JSON.stringify(entity)};
         this.#executeCommand(command, commandParameters, onSuccess, onError);
     }
+
+    commandHistory(onSuccess, onError) {
+        let command = "GET_DOCUMENTS_HISTORY";
+        let commandParameters = {};
+        this.#executeCommand(command, commandParameters, onSuccess, onError);
+    }
 }

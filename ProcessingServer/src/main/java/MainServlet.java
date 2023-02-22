@@ -2,7 +2,6 @@ import classes.RequestCode;
 import core.interaction.*;
 import handlers.SessionHandler;
 import handlers.UsersInfoHandler;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -118,10 +117,11 @@ public class MainServlet extends HttpServlet {
                 register(RequestCode.SESSION_OPEN, sessionHandler, environment.editContentRequestExtractor, environment.sessionOpenResponsePacker);
                 register(RequestCode.SESSION_CLOSE, sessionHandler, environment.baseRequestExtractor, environment.sessionCloseResponsePacker);
 
-                RequestHandler usersInfoHandler = new UsersInfoHandler(environment.sessionManager, environment.securityManager);
+                RequestHandler usersInfoHandler = new UsersInfoHandler(environment.sessionManager, environment.securityManager, environment.documentManager);
                 register(RequestCode.USERS_INFO, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.CURRENT_USER_INFO, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityWithViolationsRequestExtractor, environment.sessionOpenResponsePacker);
+                register(RequestCode.GET_DOCUMENTS_HISTORY, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();

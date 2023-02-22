@@ -8,10 +8,23 @@ export default class MainServicePageController {
 
     init() {
         CommonUtils.getContainer('LogoutButton').click(this.#onExit.bind(this));
+        CommonUtils.getContainer('History').click(this.#onHistory.bind(this));
+    }
+
+    #onHistory(){
+        this._network.commandHistory(MainServicePageController.#onHistoryForm, MainServicePageController.#onHistoryFormFailed)
     }
 
     #onExit(){
         this._network.commandLogout(MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
+    }
+
+    static #onHistoryForm(){
+        document.location.href = '../ProcessingServer/loginform.html';
+    }
+
+    static #onHistoryFormFailed(){
+        alert('Нет ранее загруженных документов');
     }
 
     static #onAuthorizationPassed(){
