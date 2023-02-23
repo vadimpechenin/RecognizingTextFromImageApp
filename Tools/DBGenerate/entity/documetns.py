@@ -6,7 +6,7 @@ from sqlalchemy import Column, String
 import sqlalchemy as sa
 from core.base import Base
 class Documents(Base):
-    __tablename__ = 'documetns'
+    __tablename__ = 'documents'
     id = Column(String, primary_key=True, autoincrement=False)
     userid = sa.Column(sa.String, sa.ForeignKey('users.id'))
     title = Column(String)

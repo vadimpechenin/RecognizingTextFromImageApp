@@ -17,7 +17,7 @@ public class Document extends ObjectWithID {
     @Column(name = "filepdf")
     private byte[] filepdf;
 
-    @Column(name = "filetxt")
+    @Column(name = "filetext")
     private byte[] filetxt;
 
     public String getUserID() {

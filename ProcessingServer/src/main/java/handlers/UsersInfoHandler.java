@@ -1,5 +1,6 @@
 package handlers;
 
+import classes.DocumentsInfo;
 import classes.RequestCode;
 import classes.Session;
 import classes.UsersInfo;
@@ -61,7 +62,7 @@ public class UsersInfoHandler extends RequestHandlerContainer {
         session.lastActivityTime = Clock.systemDefaultZone().instant();
 
         String[] userIDs = new String[] {session.currentUserID};
-        return HandleInfo(responseRecipient, request, session.getId(), userIDs);
+        return DocumentInfo(responseRecipient, request, session.getId(), userIDs);
     }
 
     private boolean RegistrationUserInfo(ResponseRecipient responseRecipient, Request requestBase) {
@@ -129,8 +130,8 @@ public class UsersInfoHandler extends RequestHandlerContainer {
     private boolean DocumentInfo(ResponseRecipient responseRecipient, Request request, String sessionID, String[] userIDs) {
         boolean result;
         List<Document> documents = documentManager.getDocuments(sessionID, userIDs);
-        UsersInfo view = new UsersInfo(users);
-        result = users.size() != 0;
+        DocumentsInfo view = new DocumentsInfo(documents);
+        result = documents.size() != 0;
 
         ObjectResponse response = new ObjectResponse(request.code, request.sessionID, result, view);
 

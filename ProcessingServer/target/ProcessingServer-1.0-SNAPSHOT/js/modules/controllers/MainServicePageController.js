@@ -20,7 +20,7 @@ export default class MainServicePageController {
     }
 
     static #onHistoryForm(){
-        document.location.href = '../ProcessingServer/loginform.html';
+        document.location.href = '../ProcessingServer/history.html';
     }
 
     static #onHistoryFormFailed(){
