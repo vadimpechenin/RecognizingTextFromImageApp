@@ -1,4 +1,5 @@
 export default class NetworkClient {
+
     constructor(parent) {
         this._parent = parent;
         this._serverUrl = 'handler';
@@ -31,11 +32,12 @@ export default class NetworkClient {
 
     #executeCommandWihtResult(commandName, commandParameters, onSuccess, onError) {
         let query = {
-            method: 'GET',
+            method: 'POST',
             url: this._serverUrl,
             timeout: this._defaultTimeout,
             context: this._parent,
-            success: onSuccess,
+            dataType: 'json',
+            success: onSuccessResult,//onSuccess,
             error: onError
         };
 
@@ -51,9 +53,18 @@ export default class NetworkClient {
         }
 
         let response = $.ajax(query);
+/*        if (response.ok){
+            let result = response.json()
+        }
         //let result = JSON.parse(response);
-        return response
+        return response*/
+        function onSuccessResult(data) {
+            let result = data.documents
+            onSuccess(result)
+        }
     }
+
+
 
     commandLogin(username, password, onSuccess, onError) {
         let command = "SESSION_OPEN";
@@ -77,7 +88,6 @@ export default class NetworkClient {
     commandHistory(onSuccess, onError) {
         let command = "GET_DOCUMENTS_HISTORY";
         let commandParameters = {};
-        let response = this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
-        let i = 0
+        this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
     }
 }

@@ -1,9 +1,11 @@
 import NetworkClient from "../NetworkClient.js";
 import CommonUtils from "../CommonUtils.js";
+import HistoryController from "../controllers/HistoryController.js";
 
 export default class MainServicePageController {
     constructor() {
         this._network = new NetworkClient(this);
+        //this._historyController = new HistoryController(); //TODO не работает так, надо иначе что-то делать
     }
 
     init() {
@@ -19,7 +21,8 @@ export default class MainServicePageController {
         this._network.commandLogout(MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
     }
 
-    static #onHistoryForm(){
+    static #onHistoryForm(result){
+        new HistoryController(result); // TODO так тоже не получается
         document.location.href = '../ProcessingServer/history.html';
     }
 
