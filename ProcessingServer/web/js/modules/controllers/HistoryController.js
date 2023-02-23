@@ -4,6 +4,7 @@ import CommonUtils from "../CommonUtils.js";
 export default class HistoryController {
     constructor() {
         this._network = new NetworkClient(this);
+        this.documents = [];
     }
 
     init() {

@@ -18,7 +18,7 @@ public class Document extends ObjectWithID {
     private byte[] filepdf;
 
     @Column(name = "filetext")
-    private byte[] filetxt;
+    private byte[] filetext;
 
     public String getUserID() {
         return userID;
@@ -44,11 +44,11 @@ public class Document extends ObjectWithID {
         this.filepdf = filepdf;
     }
 
-    public byte[] getFiletxt() {
-        return filetxt;
+    public byte[] getFiletext() {
+        return filetext;
     }
 
-    public void setFiletxt(byte[] filetxt) {
-        this.filetxt = filetxt;
+    public void setFiletext(byte[] filetxt) {
+        this.filetext = filetxt;
     }
 }

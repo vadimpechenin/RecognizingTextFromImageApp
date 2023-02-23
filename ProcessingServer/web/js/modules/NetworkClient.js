@@ -29,6 +29,32 @@ export default class NetworkClient {
         $.ajax(query);
     }
 
+    #executeCommandWihtResult(commandName, commandParameters, onSuccess, onError) {
+        let query = {
+            method: 'GET',
+            url: this._serverUrl,
+            timeout: this._defaultTimeout,
+            context: this._parent,
+            success: onSuccess,
+            error: onError
+        };
+
+        let parameters = commandParameters;
+        if (parameters instanceof FormData) {
+            parameters.append("cmd", commandName);
+            query.data = parameters;
+            query.processData = false;
+            query.contentType = false;
+        } else {
+            parameters.cmd = commandName;
+            query.data = parameters;
+        }
+
+        let response = $.ajax(query);
+        //let result = JSON.parse(response);
+        return response
+    }
+
     commandLogin(username, password, onSuccess, onError) {
         let command = "SESSION_OPEN";
         let commandParameters = {"id": username.trim(), "string": md5(password.trim())};
@@ -51,6 +77,7 @@ export default class NetworkClient {
     commandHistory(onSuccess, onError) {
         let command = "GET_DOCUMENTS_HISTORY";
         let commandParameters = {};
-        this.#executeCommand(command, commandParameters, onSuccess, onError);
+        let response = this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
+        let i = 0
     }
 }
