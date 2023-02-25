@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>RecognizeTextResource</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="js/page/MainServicePage.js" type="module"></script>
+    <link rel = "stylesheet" href="css/MainServicePage.css">
+</head>
+<body>
+<div th:fragment="header">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Личный кабинет</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <button class="p2_text_dark" type='button' id='Administration'>Панель администратора</button>
+            <button class="p2_text_dark" type='button' id='Recognized'>Сделать распознавание</button>
+            <button class="p2_text_dark" type='button' id='Download'>Загрузить файл</button>
+            <button class="p2_text_dark" type='button' id='History'>История операций</button>
+            <button class="p2_text_dark" type='button' id='LogoutButton'>Выход</button>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

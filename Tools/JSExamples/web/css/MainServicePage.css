@@ -1,0 +1,12 @@
+button.p2_text_dark {
+    background: #fff; /* Белый цвет фона */
+    color: #000000; /* Черный цвет текста */
+    border: none; /* Убираем рамку */
+}
+
+/*
+button#LogoutButton {
+    background: #fff; !* Синий цвет фона *!
+    color: #000000; !* Белый цвет текста *!
+    border: none; !* Убираем рамку *!
+}*/

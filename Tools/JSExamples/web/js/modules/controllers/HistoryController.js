@@ -1,12 +1,11 @@
-import NetworkClient from "../NetworkClient.js";
-import CommonUtils from "../CommonUtils.js";
 import Document from "../entities/Document.js";
+import CommonUtils from "../CommonUtils.js";
+
 
 export default class HistoryController {
     constructor() {
-        this._network = new NetworkClient(this);
         this._documents = [];
-        /*import documentsArray from '../controllers/MainServicePageController.js';
+        /*import { documentsArray } from '../controllers/MainServicePageController.js';
         for (let i = 0; i < result.length; i++) {
             this.addNewElement(i, result[i])
         }*/
@@ -18,9 +17,19 @@ export default class HistoryController {
 
     init() {
         CommonUtils.getContainer('ReturnToMain').click(HistoryController.#onExit.bind(this));
+        this._documetns = {
+            'Пожарная служба' : [
+                ['Номер 1', '101'],
+                ['Номер 2', '112']
+            ],
+            'Полиция' : [
+                ['Номер 1', '102'],
+                ['Номер 2', '112']
+            ]
+        }
     }
 
     static #onExit(){
-        document.location.href = '../ProcessingServer/MainServicePage.html';
+        document.location.href = '../JSExamples/MainServicePage.html';
     }
 }
