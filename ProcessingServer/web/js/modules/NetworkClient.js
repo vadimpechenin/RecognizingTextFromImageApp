@@ -37,7 +37,7 @@ export default class NetworkClient {
             timeout: this._defaultTimeout,
             context: this._parent,
             dataType: 'json',
-            success: onSuccessResult,//onSuccess,
+            success: onSuccessResult,
             error: onError
         };
 
@@ -53,11 +53,7 @@ export default class NetworkClient {
         }
 
         let response = $.ajax(query);
-/*        if (response.ok){
-            let result = response.json()
-        }
-        //let result = JSON.parse(response);
-        return response*/
+
         function onSuccessResult(data) {
             let result = data.documents
             onSuccess(result)

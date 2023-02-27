@@ -1,9 +1,6 @@
 package handlers;
 
-import classes.DocumentsInfo;
-import classes.RequestCode;
-import classes.Session;
-import classes.UsersInfo;
+import classes.*;
 import core.CommonUtils;
 import core.SessionManager;
 import core.documentManager.DocumentManager;
@@ -130,7 +127,7 @@ public class UsersInfoHandler extends RequestHandlerContainer {
     private boolean DocumentInfo(ResponseRecipient responseRecipient, Request request, String sessionID, String[] userIDs) {
         boolean result;
         List<Document> documents = documentManager.getDocuments(sessionID, userIDs);
-        DocumentsInfo view = new DocumentsInfo(documents);
+        DocumentsInfoWithoutFiles view = new DocumentsInfoWithoutFiles(documents);
         result = documents.size() != 0;
 
         ObjectResponse response = new ObjectResponse(request.code, request.sessionID, result, view);

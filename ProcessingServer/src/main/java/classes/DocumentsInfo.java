@@ -10,4 +10,5 @@ public class DocumentsInfo {
     public DocumentsInfo(List<Document> documents) {
         this.documents = documents;
     }
+
 }

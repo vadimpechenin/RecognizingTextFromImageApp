@@ -30,22 +30,6 @@ export default class HistoryController {
             document.querySelector('.documents').appendChild(row)
 
         }
-       /* let row = document.createElement('div')
-        row.innerHTML=`<button class="b-1" id="b-1">Выбрать</button>`
-        document.querySelector('.content').appendChild(row)*/
-        //Обработчик кнопки
-       /* document.querySelector('.b-1').addEventListener('click', () => {
-            let radio = document.querySelectorAll('.i-1');
-            let data = '';
-            for (let i=0; i<radio.length; i++){
-                if (radio[i].checked){
-                    data = radio[i].value;
-                    break;
-                }
-            }
-            document.querySelector('.out-1').innerHTML = data;
-        })*/
-        //CommonUtils.getContainer('b-1').click(HistoryController.#selectDocument.bind(this));
     }
 
     #selectDocument(){

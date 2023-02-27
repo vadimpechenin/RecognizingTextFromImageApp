@@ -5,6 +5,9 @@ import dbclasses.Document;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class DocumentManagerService {
     private final SessionFactory sessionFactory;
@@ -34,8 +37,8 @@ public class DocumentManagerService {
         Transaction transaction = session.beginTransaction();
         try {
             data.documents.addAll(session.createQuery("SELECT row FROM Document row WHERE row.userID= : userID", Document.class).
-                    setParameter("userID", id).
-                    list());
+                setParameter("userID", id).
+                list());
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
