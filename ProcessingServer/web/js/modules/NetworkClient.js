@@ -90,4 +90,10 @@ export default class NetworkClient {
         let commandParameters = {};
         this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
     }
+
+    commandLoadDocument(documentID, onSuccess, onError) {
+        let command = "GET_DOCUMENT_BY_ID";
+        let commandParameters = {"id": documentID.trim()};
+        this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
+    }
 }
