@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>WorkWithFiles</title>
+    <link rel = "stylesheet" href="css/workWithFiles.css">
+    <script src="./js/workWithFiles.js" type="module"></script>
+</head>
+<body>
+    <div th:fragment="header">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Личный кабинет</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <button class="p2_text_dark" type='button' id='Administration'>Панель администратора</button>
+                <button class="p2_text_dark" type='button' id='Recognized'>Сделать распознавание</button>
+                <button class="p2_text_dark" type='button' id='Download'>Загрузить файл</button>
+                <button class="p2_text_dark" type='button' id='History'>История операций</button>
+                <button class="p2_text_dark" type='button' id='LogoutButton'>Выход</button>
+            </nav>
+        </div>
+
+    <div class="buttonFile">+</div>
+    <input class="content" type="file">
+    </div>
+</body>
+</html>
