@@ -6,6 +6,7 @@ import DocumentWithoutFile from "../entities/DocumentWithoutFile.js";
 let documentsArray;
 let documentWithFile
 let pdfFile
+let resultFile
 
 export default class HistoryController {
     constructor() {
@@ -16,6 +17,8 @@ export default class HistoryController {
     init() {
         CommonUtils.getContainer('ReturnToMain').click(HistoryController.#onExit.bind(this));
         CommonUtils.getContainer('SelectDocument').click(this.#selectDocument.bind(this));
+        CommonUtils.getContainer('DownloadPDF').click(HistoryController.#downloadPDF.bind(this));
+        CommonUtils.getContainer('DownloadDOCX').click(HistoryController.#downloadDOCX.bind(this));
     }
 
     static #onHistoryForm(result){
@@ -58,23 +61,45 @@ export default class HistoryController {
 
     static #onLoadDocumentPassed(data){
         documentWithFile = new Document(data[0].id, data[0].userID, data[0].title, data[0].filepdf, data[0].filetext);
-        pdfFile = documentWithFile.filepdf
-        let file = new Blob([pdfFile], { type: 'application/pdf' });
-        //let fileURL = URL.createObjectURL(file);
-        //window.open(fileURL);
-        createIframe(file)
-      /*  getDocument()
-            .success(function(data) {
-                let file = new Blob([data], { type: 'application/pdf' });
-                let fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-            })*/
-
+        //TODO - заменить на просто файлы с сервера, уже не в массиве байт
+        pdfFile = new Blob([documentWithFile.filepdf], { type: 'application/pdf' });
+        resultFile = new Blob([documentWithFile.filetext], {type: 'text/plain'});
+        createIframe(pdfFile)
         alert('Готово');
     }
 
     static #onLoadDocumentFailed(){
         alert('Нет сохраненного документа');
+    }
+
+    static #downloadPDF(){
+        if (pdfFile != null) {
+            let fileURL = URL.createObjectURL(pdfFile);
+            console.log(fileURL);
+
+            let anchor = document.createElement('a');
+            anchor.href = fileURL;
+            anchor.download = documentWithFile.title + '.pdf';
+            document.body.append(anchor);
+            anchor.style = "display none";
+            anchor.click();
+            anchor.remove();
+        }
+    }
+
+    static #downloadDOCX(){
+        if (resultFile != null) {
+            let fileURL = URL.createObjectURL(resultFile);
+            console.log(fileURL);
+
+            let anchor = document.createElement('a');
+            anchor.href = fileURL;
+            anchor.download = documentWithFile.title + '.docx';
+            document.body.append(anchor);
+            anchor.style = "display none";
+            anchor.click();
+            anchor.remove();
+        }
     }
 
     static #onExit(){
@@ -85,11 +110,13 @@ export default class HistoryController {
 
 //функция обработки pdf-файлов:
 const createIframe = pdf => {
-    const iframe = document.createElement('iframe')
-    iframe.src = URL.createObjectURL(pdf)
-    iframe.width = innerWidth
-    iframe.height = innerHeight
-    log(iframe)
-    document.body.append(iframe)
-    URL.revokeObjectURL(pdf)
+    const iframe = document.createElement('iframe');
+    iframe.src = URL.createObjectURL(pdf);
+    iframe.width = innerWidth;
+    iframe.height = innerHeight;
+    console.log(iframe);
+    let element = document.getElementById('content');
+    //document.body.append(iframe)
+    element.appendChild(iframe);
+    URL.revokeObjectURL(pdf);
 }
