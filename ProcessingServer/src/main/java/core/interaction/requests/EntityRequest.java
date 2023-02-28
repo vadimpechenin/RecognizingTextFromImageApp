@@ -15,6 +15,5 @@ public class EntityRequest extends Request {
         super(code, sessionID);
         this.entityType = entityType;
         this.entity = entity;
-
     }
 }

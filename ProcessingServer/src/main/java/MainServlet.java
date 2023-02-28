@@ -122,6 +122,7 @@ public class MainServlet extends HttpServlet {
                 register(RequestCode.CURRENT_USER_INFO, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityWithViolationsRequestExtractor, environment.sessionOpenResponsePacker);
                 register(RequestCode.GET_DOCUMENTS_HISTORY, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
+                register(RequestCode.GET_DOCUMENT_BY_ID, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();

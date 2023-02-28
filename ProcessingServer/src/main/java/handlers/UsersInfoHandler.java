@@ -9,6 +9,7 @@ import core.interaction.RequestHandlerContainer;
 import core.interaction.Response;
 import core.interaction.ResponseRecipient;
 import core.interaction.requests.EditContentRequest;
+import core.interaction.requests.EntityRequest;
 import core.interaction.requests.EntityWithViolationsRequest;
 import core.interaction.responses.ObjectResponse;
 import core.securityManager.SecurityManager;
@@ -35,6 +36,7 @@ public class UsersInfoHandler extends RequestHandlerContainer {
         register(RequestCode.CURRENT_USER_INFO.toString(), this::CurrentUserInfo);
         register(RequestCode.REGISTRATION_USER_INFO.toString(), this::RegistrationUserInfo);
         register(RequestCode.GET_DOCUMENTS_HISTORY.toString(), this::DocumentsInfo);
+        register(RequestCode.GET_DOCUMENT_BY_ID.toString(), this::DocumentsInfoByID);
     }
 
     private boolean UsersInfo(ResponseRecipient responseRecipient, Request requestBase) {
@@ -60,6 +62,15 @@ public class UsersInfoHandler extends RequestHandlerContainer {
 
         String[] userIDs = new String[] {session.currentUserID};
         return DocumentInfo(responseRecipient, request, session.getId(), userIDs);
+    }
+
+    private boolean DocumentsInfoByID(ResponseRecipient responseRecipient, Request requestBase) {
+        EditContentRequest request = (EditContentRequest) requestBase;
+        Session session = sessionManager.getSession(request.sessionID);
+        session.lastActivityTime = Clock.systemDefaultZone().instant();
+
+        String[] userIDs = new String[] {session.currentUserID};
+        return DocumentInfoID(responseRecipient, request, session.getId(), userIDs, request.contentID);
     }
 
     private boolean RegistrationUserInfo(ResponseRecipient responseRecipient, Request requestBase) {
@@ -128,6 +139,20 @@ public class UsersInfoHandler extends RequestHandlerContainer {
         boolean result;
         List<Document> documents = documentManager.getDocuments(sessionID, userIDs);
         DocumentsInfoWithoutFiles view = new DocumentsInfoWithoutFiles(documents);
+        result = documents.size() != 0;
+
+        ObjectResponse response = new ObjectResponse(request.code, request.sessionID, result, view);
+
+        if (responseRecipient != null) {
+            responseRecipient.ReceiveResponse(response);
+        }
+        return true;
+    }
+
+    private boolean DocumentInfoID(ResponseRecipient responseRecipient, Request request, String sessionID, String[] userIDs, String ID) {
+        boolean result;
+        List<Document>  documents = documentManager.getDocumentByID(sessionID, userIDs, ID);
+        DocumentsInfo view = new DocumentsInfo(documents);
         result = documents.size() != 0;
 
         ObjectResponse response = new ObjectResponse(request.code, request.sessionID, result, view);

@@ -48,6 +48,23 @@ public class DocumentManagerService {
         }
     }
 
+    public void getDataByID(DocumentManagerData data, String id) {
+        data.clear();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            data.documents.addAll(session.createQuery("SELECT row FROM Document row WHERE row.id= : id", Document.class).
+                    setParameter("id", id).
+                    list());
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
     public void createDocument(Document document) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

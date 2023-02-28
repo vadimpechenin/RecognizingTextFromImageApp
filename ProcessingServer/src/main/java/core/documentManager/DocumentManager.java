@@ -53,4 +53,24 @@ public class DocumentManager {
         }
         return result;
     }
+
+    public List<Document> getDocumentByID(String currentSessionID, String[] ids, String id) {
+        List<Document> result = new ArrayList<>();
+        Session session = sessionManager.getSession(currentSessionID);
+        List<String> userIDs = new ArrayList<>();
+        if(ids == null || ids.length == 0) {
+            userIDs.add(session.currentUserID);
+        } else {
+            Collections.addAll(userIDs, ids);
+        }
+        if(session != null) {
+            for(String userID : userIDs) {
+                if(Objects.equals(userID, session.currentUserID)) {
+                    service.getDataByID(data,id);
+                    result.addAll(data.documents);
+                }
+            }
+        }
+        return result;
+    }
 }

@@ -1,7 +1,7 @@
 import NetworkClient from "../NetworkClient.js";
 import CommonUtils from "../CommonUtils.js";
 import Document from "../entities/Document.js";
-import DocumentWithoutFile from "../entities/DocumentWithoutFile";
+import DocumentWithoutFile from "../entities/DocumentWithoutFile.js";
 
 let documentsArray;
 let documentWithFile
@@ -57,16 +57,39 @@ export default class HistoryController {
     }
 
     static #onLoadDocumentPassed(data){
-        documentWithFile = new Document(data.id, data.userID, data.title, data.filepdf, data.filetext);
+        documentWithFile = new Document(data[0].id, data[0].userID, data[0].title, data[0].filepdf, data[0].filetext);
         pdfFile = documentWithFile.filepdf
+        let file = new Blob([pdfFile], { type: 'application/pdf' });
+        let fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+        createIframe(file)
+      /*  getDocument()
+            .success(function(data) {
+                let file = new Blob([data], { type: 'application/pdf' });
+                let fileURL = URL.createObjectURL(file);
+                window.open(fileURL);
+            })*/
+
         alert('Готово');
     }
 
     static #onLoadDocumentFailed(){
-        alert('Нет документа');
+        alert('Нет сохраненного документа');
     }
 
     static #onExit(){
         document.location.href = '../ProcessingServer/MainServicePage.html';
     }
+}
+
+
+//функция обработки pdf-файлов:
+const createIframe = pdf => {
+    const iframe = document.createElement('iframe')
+    iframe.src = URL.createObjectURL(pdf)
+    iframe.width = innerWidth
+    iframe.height = innerHeight
+    log(iframe)
+    document.body.append(iframe)
+    URL.revokeObjectURL(pdf)
 }

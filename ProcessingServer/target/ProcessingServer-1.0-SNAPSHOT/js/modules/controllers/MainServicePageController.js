@@ -155,7 +155,7 @@ export default class MainServicePageController {
 
 }
 
-/*;((D, B, log = (arg) => console.log(arg)) => {
+;((D, B, log = (arg) => console.log(arg)) => {
     //1 Объявляем переменные для файлоприемника, инпута и файла
     const dropZone = D.querySelector('.loadFile')//('div')
     const input = D.querySelector('.content')//('input')
@@ -267,4 +267,4 @@ export default class MainServicePageController {
         B.append(iframe)
         URL.revokeObjectURL(pdf)
     }
-})(document, document.body)*/
+})(document, document.body)
