@@ -2,7 +2,7 @@ from random import randint
 
 from core.support.UUIDClass import UUIDClass
 from handlers.baseCommandHandler import BaseCommandHandler
-from entity.documetns import Documents
+from entity.documents import Documents
 import core.support.supportFunctions as SA
 
 class GenerateDocumentCommandHandler(BaseCommandHandler):
@@ -13,7 +13,9 @@ class GenerateDocumentCommandHandler(BaseCommandHandler):
         # Запрос к базе данных на заполнение данных
         data_base = parameters.nameOfDatabase
         data_base.create_session()
-        for j in range(2):
+        k = 0
+        k1 = 0
+        for j in range(4):
             # Генерация uuid для подстановки
             ID = UUIDClass.geterateUUIDWithout_()
             parameters.uuidObject.documentsIDList.append(ID)
@@ -21,11 +23,15 @@ class GenerateDocumentCommandHandler(BaseCommandHandler):
             file_binary_text = self.saveToByteFile(parameters.filetext[0])
 
             type_object = Documents(id=ID,
-                                    userid = parameters.uuidObject.usersIDList[j],
-                                    title =parameters.title[0],
+                                    userid = parameters.uuidObject.usersIDList[k1],
+                                    title =parameters.title[k],
                                     filepdf = file_binary_pdf,
                                     filetext = file_binary_text)
             data_base.databaseAddCommit(type_object)
+            k+=1
+            if (j==1):
+                k1+=1
+                k=0
 
         #ciphers = data_base.select_all_params_in_table(parameters.nameOfTable)
 
