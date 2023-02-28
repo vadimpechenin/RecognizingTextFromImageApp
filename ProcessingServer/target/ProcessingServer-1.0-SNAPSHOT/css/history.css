@@ -1,0 +1,33 @@
+* { margin: 0; padding: 0; }
+section { padding: 10px; }
+
+section.list { position: absolute; left: 100px; top: 100px; width: 50%; }
+section.content { position: sticky; right: 50px; top: 50px; width: 50%; }
+
+button.p2_text_dark {
+    background: #fff; /* Белый цвет фона */
+    color: #000000; /* Черный цвет текста */
+    border: none; /* Убираем рамку */
+}
+
+input.contentIN {
+    display: none;
+}
+
+img,
+audio,
+video {
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+section.content {
+    margin: 0 auto;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    min-height: 100vh;
+    max-width: 500px;
+    background: radial-gradient(circle, skyblue, steelblue);
+    color: #222;
+}

@@ -1,8 +1,11 @@
 import NetworkClient from "../NetworkClient.js";
 import CommonUtils from "../CommonUtils.js";
 import Document from "../entities/Document.js";
+import DocumentWithoutFile from "../entities/DocumentWithoutFile";
 
 let documentsArray;
+let documentWithFile
+let pdfFile
 
 export default class HistoryController {
     constructor() {
@@ -13,7 +16,6 @@ export default class HistoryController {
     init() {
         CommonUtils.getContainer('ReturnToMain').click(HistoryController.#onExit.bind(this));
         CommonUtils.getContainer('SelectDocument').click(this.#selectDocument.bind(this));
-        SelectDocument
     }
 
     static #onHistoryForm(result){
@@ -21,7 +23,7 @@ export default class HistoryController {
         for (let i = 0; i < result.length; i++) {
             HistoryController.addNewElement(i, result[i])
         }
-        document.querySelector('.content').innerHTML =`<div class="documents"></div>`
+        document.querySelector('.list').innerHTML =`<div class="documents"></div>`
         for (let i = 0; i < documentsArray.length; i++){
             let _document = documentsArray[i]
             let row = document.createElement('div')
@@ -50,11 +52,13 @@ export default class HistoryController {
     }
 
     static addNewElement(i, result){
-        documentsArray[i] = new Document(result.id, result.userID, result.title);
+        documentsArray[i] = new DocumentWithoutFile(result.id, result.userID, result.title);
         console.log(documentsArray[i]);
     }
 
     static #onLoadDocumentPassed(data){
+        documentWithFile = new Document(data.id, data.userID, data.title, data.filepdf, data.filetext);
+        pdfFile = documentWithFile.filepdf
         alert('Готово');
     }
 

@@ -2,7 +2,10 @@ import NetworkClient from "../NetworkClient.js";
 import CommonUtils from "../CommonUtils.js";
 
 
+let fileToRecognize;
+
 export default class MainServicePageController {
+
     constructor() {
         this._network = new NetworkClient(this);
     }
@@ -10,6 +13,8 @@ export default class MainServicePageController {
     init() {
         CommonUtils.getContainer('LogoutButton').click(this.#onExit.bind(this));
         CommonUtils.getContainer('History').click(MainServicePageController.#onHistoryForm.bind(this));
+        //CommonUtils.getContainer('loadFile').click(this.#loadFile.bind(this));
+        CommonUtils.getContainer('Recognized').click(MainServicePageController.#makeRecognition.bind(this));
     }
 
     #onExit(){
@@ -27,4 +32,239 @@ export default class MainServicePageController {
     static #onAuthorizationFailed(){
         alert('Некорректный выход');
     }
+
+    static #makeRecognition() {
+        if (fileToRecognize != null) {
+            this._network.commandMakeRecogtion(fileToRecognize, MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
+        }
+       /* //1 Объявляем переменные для файлоприемника, инпута и файла
+        const dropZone = document.querySelector('.loadFile')//('div')
+        const input = document.querySelector('.content')//('input')
+        let file;
+        // Отключаем обработку событий «dragover» и «drop» браузером:
+        document.addEventListener('dragover', ev => ev.preventDefault())
+        document.addEventListener('drop', ev => ev.preventDefault())
+        dropZone.addEventListener('drop', ev => {
+            ev.preventDefault()
+            console.log(ev.dataTransfer)
+            this.file = ev.dataTransfer.files[0]
+            console.log(file)
+            handleFile(file)
+        })
+        //3 Обрабатываем клик по файлоприемнику (делегируем клик инпуту):
+        //dropZone.addEventListener('click', () => {
+            input.click()
+            input.addEventListener('change', () => {
+                console.log(input.files)
+                file = input.files[0]
+                console.log(file)
+                handleFile(file)
+            })
+        //})
+
+        //Приступаем к обработке файла:
+        const handleFile = file => {
+            dropZone.remove();
+            input.remove();
+            if (file.type === 'text/html' ||
+                file.type === 'text/css' ||
+                file.type === 'text/javascript')
+                return;
+
+            if (file.type === 'application/pdf') {
+                createIframe(file)
+                return;
+            }
+
+            const type = file.type.replace(/\/.+/, '')
+
+            log(file.type)
+            switch (type) {
+                case 'image':
+                    createImage(file)
+                    break;
+                case 'audio':
+                    createAudio(file)
+                    break;
+                case 'video':
+                    createVideo(file)
+                    break;
+                case 'text':
+                    createText(file)
+                    break;
+                default:
+                    B.innerHTML = `<h3>Unknown File Format!</h3>`
+                    const timer = setTimeout(() => {
+                        location.reload()
+                        clearTimeout(timer)
+                    }, 2000)
+                    break;
+            }
+        }
+
+        //Функция обработки изображения:
+        const createImage = image => {
+            const imageEl = document.createElement('img')
+            imageEl.src = URL.createObjectURL(image)
+            log(imageEl)
+            B.append(imageEl)
+            URL.revokeObjectURL(image)
+        }
+
+        //Функция обработки аудио:
+        const createAudio = audio => {
+            const audioEl = document.createElement('audio')
+            audioEl.setAttribute('controls', '')
+            audioEl.src = URL.createObjectURL(audio)
+            log(audioEl)
+            document.body.append(audioEl)
+            audioEl.play()
+            URL.revokeObjectURL(audio)
+        }
+
+        //Функция обработки видео:
+        const createVideo = video => {
+            const videoEl = document.createElement('video')
+            videoEl.setAttribute('controls', '')
+            videoEl.setAttribute('loop', 'true')
+            videoEl.src = URL.createObjectURL(video)
+            log(videoEl)
+            document.body.append(videoEl)
+            videoEl.play()
+            URL.revokeObjectURL(video)
+        }
+
+        //Функция обработки текста:
+        const createText = text => {
+            const reader = new FileReader()
+            reader.readAsText(text, 'windows-1251')
+            reader.onload = () => document.body.innerHTML = `<p><pre>${reader.result}</pre></p>`
+        }
+
+        //функция обработки pdf-файлов:
+        const createIframe = pdf => {
+            const iframe = document.createElement('iframe')
+            iframe.src = URL.createObjectURL(pdf)
+            iframe.width = innerWidth
+            iframe.height = innerHeight
+            log(iframe)
+            document.body.append(iframe)
+            URL.revokeObjectURL(pdf)
+        }*/
+    }
+
 }
+
+/*;((D, B, log = (arg) => console.log(arg)) => {
+    //1 Объявляем переменные для файлоприемника, инпута и файла
+    const dropZone = D.querySelector('.loadFile')//('div')
+    const input = D.querySelector('.content')//('input')
+    let file
+    // Отключаем обработку событий «dragover» и «drop» браузером:
+    D.addEventListener('dragover', ev => ev.preventDefault())
+    D.addEventListener('drop', ev => ev.preventDefault())
+    dropZone.addEventListener('drop', ev => {
+        ev.preventDefault()
+        log(ev.dataTransfer)
+        file = ev.dataTransfer.files[0]
+        log(file)
+        handleFile(file)
+    })
+
+//3 Обрабатываем клик по файлоприемнику (делегируем клик инпуту):
+    dropZone.addEventListener('click', () => {
+        input.click()
+        input.addEventListener('change', () => {
+            log(input.files)
+            file = input.files[0]
+            log(file)
+            handleFile(file)
+            fileToRecognize = file;
+        })
+    })
+
+//Приступаем к обработке файла:
+    const handleFile = file => {
+        dropZone.remove();
+        input.remove();
+        if (file.type === 'text/html' ||
+            file.type === 'text/css' ||
+            file.type === 'text/javascript')
+            return;
+
+        if (file.type === 'application/pdf') {
+            createIframe(file)
+            return;
+        }
+
+        const type = file.type.replace(/\/.+/, '')
+
+        log(file.type)
+        switch (type) {
+            case 'image':
+                createImage(file)
+                break;
+            case 'audio':
+                createAudio(file)
+                break;
+            case 'video':
+                createVideo(file)
+                break;
+            case 'text':
+                createText(file)
+                break;
+            default:
+                B.innerHTML = `<h3>Unknown File Format!</h3>`
+                const timer = setTimeout(() => {
+                    location.reload()
+                    clearTimeout(timer)
+                }, 2000)
+                break;
+        }
+    }
+//Функция обработки изображения:
+    const createImage = image => {
+        const imageEl = D.createElement('img')
+        imageEl.src = URL.createObjectURL(image)
+        log(imageEl)
+        B.append(imageEl)
+        URL.revokeObjectURL(image)
+    }
+//Функция обработки аудио:
+    const createAudio = audio => {
+        const audioEl = D.createElement('audio')
+        audioEl.setAttribute('controls', '')
+        audioEl.src = URL.createObjectURL(audio)
+        log(audioEl)
+        B.append(audioEl)
+        audioEl.play()
+        URL.revokeObjectURL(audio)
+    }
+//Функция обработки видео:
+    const createVideo = video => {
+        const videoEl = D.createElement('video')
+        videoEl.setAttribute('controls', '')
+        videoEl.setAttribute('loop', 'true')
+        videoEl.src = URL.createObjectURL(video)
+        log(videoEl)
+        B.append(videoEl)
+        videoEl.play()
+        URL.revokeObjectURL(video)
+    }
+//Функция обработки текста:
+    const createText = text => {
+        const reader = new FileReader()
+        reader.readAsText(text, 'windows-1251')
+        reader.onload = () => B.innerHTML = `<p><pre>${reader.result}</pre></p>`
+    }
+//функция обработки pdf-файлов:
+    const createIframe = pdf => {
+        const iframe = D.createElement('iframe')
+        iframe.src = URL.createObjectURL(pdf)
+        iframe.width = innerWidth
+        iframe.height = innerHeight
+        log(iframe)
+        B.append(iframe)
+        URL.revokeObjectURL(pdf)
+    }
+})(document, document.body)*/
