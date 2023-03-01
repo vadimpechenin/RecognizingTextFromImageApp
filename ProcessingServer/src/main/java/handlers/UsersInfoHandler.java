@@ -9,7 +9,6 @@ import core.interaction.RequestHandlerContainer;
 import core.interaction.Response;
 import core.interaction.ResponseRecipient;
 import core.interaction.requests.EditContentRequest;
-import core.interaction.requests.EntityRequest;
 import core.interaction.requests.EntityWithViolationsRequest;
 import core.interaction.responses.ObjectResponse;
 import core.securityManager.SecurityManager;

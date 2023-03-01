@@ -13,8 +13,7 @@ export default class MainServicePageController {
     init() {
         CommonUtils.getContainer('LogoutButton').click(this.#onExit.bind(this));
         CommonUtils.getContainer('History').click(MainServicePageController.#onHistoryForm.bind(this));
-        //CommonUtils.getContainer('loadFile').click(this.#loadFile.bind(this));
-        CommonUtils.getContainer('Recognized').click(MainServicePageController.#makeRecognition.bind(this));
+        CommonUtils.getContainer('Recognized').click(this.#makeRecognition.bind(this));
     }
 
     #onExit(){
@@ -33,9 +32,16 @@ export default class MainServicePageController {
         alert('Некорректный выход');
     }
 
-    static #makeRecognition() {
+    #makeRecognition() {
         if (fileToRecognize != null) {
-            this._network.commandMakeRecogtion(fileToRecognize, MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
+            let title = document.getElementById('inputTitle').value;
+            if (title!= null) {
+                this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
+            }else{
+                alert('Введите название');
+            }
+        }else{
+            alert('Выберите файл');
         }
     }
 }

@@ -4,7 +4,7 @@ button.p2_text_dark {
     border: none; /* Убираем рамку */
 }
 
-section {
+section.loadContent {
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -14,6 +14,15 @@ section {
     background: radial-gradient(circle, skyblue, steelblue);
     color: #222;
 }
+
+input{
+    background: #fff; /* Белый цвет фона */
+    color: #000000; /* Черный цвет текста */
+    border: thick double #32a1ce;;
+}
+
+section.list { position: absolute; left: 100px; top: 100px; width: 20%; }
+section.loadContent { position: sticky; right: 50px; top: 50px; width: 80%; }
 
 #loadFile {
     width: 150px;
@@ -28,8 +37,7 @@ section {
     user-select: none;
     cursor: pointer;
 }
-
-input {
+input.content{
     display: none;
 }
 

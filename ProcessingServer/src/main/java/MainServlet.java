@@ -1,9 +1,11 @@
 import classes.RequestCode;
 import core.interaction.*;
+import handlers.DocumentsHandler;
 import handlers.SessionHandler;
 import handlers.UsersInfoHandler;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,11 @@ import java.util.Map;
  *
  */
 @WebServlet(name = "MainServlet", urlPatterns = "/handler")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 5,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 6
+)
 public class MainServlet extends HttpServlet {
 
 
@@ -123,6 +130,9 @@ public class MainServlet extends HttpServlet {
                 register(RequestCode.REGISTRATION_USER_INFO, usersInfoHandler, environment.entityWithViolationsRequestExtractor, environment.sessionOpenResponsePacker);
                 register(RequestCode.GET_DOCUMENTS_HISTORY, usersInfoHandler, environment.baseRequestExtractor, environment.objectResponsePacker);
                 register(RequestCode.GET_DOCUMENT_BY_ID, usersInfoHandler, environment.editContentRequestExtractor, environment.objectResponsePacker);
+
+                RequestHandler documentsHandler = new DocumentsHandler(environment.sessionManager, environment.documentManager);
+                register(RequestCode.RECOGNIZE_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.objectResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();

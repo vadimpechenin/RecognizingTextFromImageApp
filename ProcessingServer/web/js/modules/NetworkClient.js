@@ -92,4 +92,14 @@ export default class NetworkClient {
         let commandParameters = {"id": documentID.trim()};
         this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
     }
+
+    commandRecognition(documentTitle, file,  onSuccess, onError) {
+        let command = "RECOGNIZE_DOCUMENT";
+        let commandParameters = new FormData();
+        commandParameters.append("fileCount", 1);
+        if (file) {
+            commandParameters.append("file1", file);
+        }
+        this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
+    }
 }

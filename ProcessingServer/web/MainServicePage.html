@@ -15,18 +15,23 @@
             <h5 class="my-0 mr-md-auto font-weight-normal">Личный кабинет</h5>
             <nav class="my-2 my-md-0 mr-md-3">
                 <button class="p2_text_dark" type='button' id='Administration'>Панель администратора</button>
-                <button class="p2_text_dark" type='button' id='Recognized'>Сделать распознавание</button>
-                <button class="p2_text_dark" type='button' id='Download'>Загрузить файл</button>
+                <button class="p2_text_dark" type='button' id='Recognized'>Распознать</button>
                 <button class="p2_text_dark" type='button' id='History'>История операций</button>
                 <button class="p2_text_dark" type='button' id='LogoutButton'>Выход</button>
             </nav>
         </div>
     </div>
+    <section class="list">
+        <form>
+            <div>
+                <p><b>Название файла:</b><br></p>
+                <label for="inputTitle"></label><input type="text" id="inputTitle" value="Document10">
+            </div>
+        </form>
+    </section>
     <section class="loadContent" id="loadContent">
         <div class="loadFile" id='loadFile'>+</div>
         <input class="content" type="file">
     </section>
-
 </body>
-
 </html>

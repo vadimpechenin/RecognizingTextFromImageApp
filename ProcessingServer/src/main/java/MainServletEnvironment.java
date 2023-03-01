@@ -5,6 +5,7 @@ import core.interaction.RequestExtractor;
 import core.interaction.ResponsePacker;
 import core.interaction.requestExtractors.BaseRequestExtractor;
 import core.interaction.requestExtractors.EditContentRequestExtractor;
+import core.interaction.requestExtractors.RequestWithAttachmentsExtractor;
 import core.interaction.requestExtractors.entityRequestExtractor.EntityRequestExtractor;
 import core.interaction.requestExtractors.entityRequestExtractor.EntityWithViolationsRequestExtractor;
 import core.interaction.responsePackers.ObjectResponsePacker;
@@ -22,6 +23,7 @@ public class MainServletEnvironment {
     final public ResourceManager resourceManager;
     final public RequestExtractor baseRequestExtractor;
     final public RequestExtractor editContentRequestExtractor;
+    final public RequestWithAttachmentsExtractor requestWithAttachmentsExtractor;
     final public EntityRequestExtractor entityRequestExtractor;
     final public EntityWithViolationsRequestExtractor entityWithViolationsRequestExtractor;
     final public ResponsePacker sessionOpenResponsePacker;
@@ -40,6 +42,7 @@ public class MainServletEnvironment {
         this.editContentRequestExtractor = new EditContentRequestExtractor();
         this.entityRequestExtractor = new EntityRequestExtractor();
         this.entityWithViolationsRequestExtractor = new EntityWithViolationsRequestExtractor();
+        this.requestWithAttachmentsExtractor = new RequestWithAttachmentsExtractor();
 
         this.objectResponsePacker = new ObjectResponsePacker(resourceManager);
         this.sessionCloseResponsePacker = new SessionCloseResponsePacker(resourceManager);
