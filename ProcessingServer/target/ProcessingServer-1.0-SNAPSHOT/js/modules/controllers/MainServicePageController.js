@@ -3,6 +3,7 @@ import CommonUtils from "../CommonUtils.js";
 
 
 let fileToRecognize;
+let recognitionFile;
 
 export default class MainServicePageController {
 
@@ -14,6 +15,8 @@ export default class MainServicePageController {
         CommonUtils.getContainer('LogoutButton').click(this.#onExit.bind(this));
         CommonUtils.getContainer('History').click(MainServicePageController.#onHistoryForm.bind(this));
         CommonUtils.getContainer('Recognized').click(this.#makeRecognition.bind(this));
+        CommonUtils.getContainer('Download').click(this.#makeDownload.bind(this));
+        CommonUtils.getContainer('Save').click(this.#makeSave.bind(this));
     }
 
     #onExit(){
@@ -36,13 +39,41 @@ export default class MainServicePageController {
         if (fileToRecognize != null) {
             let title = document.getElementById('inputTitle').value;
             if (title!= null) {
-                this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onAuthorizationPassed, MainServicePageController.#onAuthorizationFailed)
+                this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onRecognitionPassed, MainServicePageController.#onRecognitionFailed)
             }else{
                 alert('Введите название');
             }
         }else{
             alert('Выберите файл');
         }
+    }
+
+    #makeDownload() {
+        if (recognitionFile != null){
+            let title = document.getElementById('inputTitle').value;
+            if (title != null) {
+                CommonUtils.downloadDOCX(recognitionFile, title);
+            }
+        }
+
+    }
+
+    #makeSave() {
+        if ((fileToRecognize != null) && (recognitionFile != null)) {
+            let title = document.getElementById('inputTitle').value;
+            if (title != null) {
+                alert('Сохранено');
+            }
+        }
+    }
+
+    static #onRecognitionPassed(data){
+        recognitionFile = null;
+        recognitionFile = new Blob([data.value], {type: 'text/plain'});
+    }
+
+    static #onRecognitionFailed(){
+        alert('Не удалось распознать документ');
     }
 }
 

@@ -55,8 +55,11 @@ export default class NetworkClient {
         let response = $.ajax(query);
 
         function onSuccessResult(data) {
-            let result = data.documents
-            onSuccess(result)
+/*            let result = null;
+            if (data.documents.length>0){
+                result = data.documents
+            }*/
+            onSuccess(data)
         }
     }
 

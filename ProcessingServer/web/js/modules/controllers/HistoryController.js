@@ -23,8 +23,8 @@ export default class HistoryController {
 
     static #onHistoryForm(result){
         documentsArray = []
-        for (let i = 0; i < result.length; i++) {
-            HistoryController.addNewElement(i, result[i])
+        for (let i = 0; i < result.documents.length; i++) {
+            HistoryController.addNewElement(i, result.documents[i])
         }
         document.querySelector('.list').innerHTML =`<div class="documents"></div>`
         for (let i = 0; i < documentsArray.length; i++){
@@ -60,7 +60,11 @@ export default class HistoryController {
     }
 
     static #onLoadDocumentPassed(data){
-        documentWithFile = new Document(data[0].id, data[0].userID, data[0].title, data[0].filepdf, data[0].filetext);
+        documentWithFile = new Document(data.documents[0].id,
+            data.documents[0].userID,
+            data.documents[0].title,
+            data.documents[0].filepdf,
+            data.documents[0].filetext);
         //TODO - заменить на просто файлы с сервера, уже не в массиве байт
         pdfFile = new Blob([documentWithFile.filepdf], { type: 'application/pdf' });
         resultFile = new Blob([documentWithFile.filetext], {type: 'text/plain'});
@@ -116,7 +120,6 @@ const createIframe = pdf => {
     iframe.height = innerHeight;
     console.log(iframe);
     let element = document.getElementById('content');
-    //document.body.append(iframe)
     element.appendChild(iframe);
     URL.revokeObjectURL(pdf);
 }

@@ -38,7 +38,7 @@ public class DocumentsHandler extends RequestHandlerContainer {
         RecognitionDocument calculateResult = new RecognitionDocument();
 
         result = recognizeTextClient.recognitionText(request.attachments, calculateResult);
-        Response response = new Response(request.code, request.sessionID, result);
+        Response response = new ObjectResponse(request.code, request.sessionID, result, calculateResult);
 
         if (responseRecipient != null) {
             responseRecipient.ReceiveResponse(response);
