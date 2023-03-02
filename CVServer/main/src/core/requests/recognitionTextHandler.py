@@ -5,6 +5,7 @@ import pytesseract
 
 from core.calculators.convertPdfToTextCalculator import ConvertPdfToTextCalculator
 from core.optParameters import OptParameters
+from core.commonUtils import CommonUtils
 
 
 class RecognitionTextHandler(object):
@@ -22,6 +23,7 @@ class RecognitionTextHandler(object):
 
         optParameters = OptParameters()
         optParameters.pytesseract = self.pytesseract
+        optParameters.imagesFolder = CommonUtils.getSolutionFolder().joinpath("CVServer").joinpath("main").joinpath("data")
         result = ConvertPdfToTextCalculator.calculate(parameters, optParameters)
         try:
             response = json.dumps(result).encode("utf8")

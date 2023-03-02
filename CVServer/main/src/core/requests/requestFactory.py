@@ -1,6 +1,6 @@
 from typing import Optional
 
-from core.requests.partIdentificationHandler import PartIdentificationHandler
+from core.requests.recognitionTextHandler import RecognitionTextHandler
 from core.requests.requestCodes import RequestCodes
 
 

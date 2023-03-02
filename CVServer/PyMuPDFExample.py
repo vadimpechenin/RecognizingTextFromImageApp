@@ -3,11 +3,14 @@
 pip install PyMuPDF
 
 """
+
+from core.commonUtils import CommonUtils
+
 import fitz
 
-#pdf_document = fitz.open("pdf\\PDFOfImage.pdf")
-#pdf_document = fitz.open("pdf\\slaids.pdf")
-pdf_document = fitz.open("pdf\\Text_handwritten.pdf")
+imagesFolder = CommonUtils.getSolutionFolder().joinpath("CVServer").joinpath("test").joinpath("resources")
+fileName = str(imagesFolder.joinpath("slaids.pdf").resolve())
+pdf_document = fitz.open(fileName)
 for current_page in range(len(pdf_document)):
    #for image in pdf_document.getPageImageList(current_page):
     for image in pdf_document.get_page_images(current_page):
