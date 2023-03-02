@@ -133,6 +133,7 @@ public class MainServlet extends HttpServlet {
 
                 RequestHandler documentsHandler = new DocumentsHandler(environment.sessionManager, environment.documentManager);
                 register(RequestCode.RECOGNIZE_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.objectResponsePacker);
+                register(RequestCode.SAVE_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.baseResponsePacker);
             }
         } catch (Exception e) {
             e.printStackTrace();

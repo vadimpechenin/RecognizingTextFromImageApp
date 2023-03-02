@@ -8,6 +8,7 @@ import core.interaction.requestExtractors.EditContentRequestExtractor;
 import core.interaction.requestExtractors.RequestWithAttachmentsExtractor;
 import core.interaction.requestExtractors.entityRequestExtractor.EntityRequestExtractor;
 import core.interaction.requestExtractors.entityRequestExtractor.EntityWithViolationsRequestExtractor;
+import core.interaction.responsePackers.BaseResponsePacker;
 import core.interaction.responsePackers.ObjectResponsePacker;
 import core.interaction.responsePackers.SessionCloseResponsePacker;
 import core.interaction.responsePackers.SessionOpenResponsePacker;
@@ -28,6 +29,7 @@ public class MainServletEnvironment {
     final public EntityWithViolationsRequestExtractor entityWithViolationsRequestExtractor;
     final public ResponsePacker sessionOpenResponsePacker;
     final public ResponsePacker sessionCloseResponsePacker;
+    final public BaseResponsePacker baseResponsePacker;
     final public ObjectResponsePacker objectResponsePacker;
 
     private MainServletEnvironment(SessionFactory hibernateSessionFactory, SessionManager sessionManager,
@@ -44,6 +46,7 @@ public class MainServletEnvironment {
         this.entityWithViolationsRequestExtractor = new EntityWithViolationsRequestExtractor();
         this.requestWithAttachmentsExtractor = new RequestWithAttachmentsExtractor();
 
+        this.baseResponsePacker = new BaseResponsePacker();
         this.objectResponsePacker = new ObjectResponsePacker(resourceManager);
         this.sessionCloseResponsePacker = new SessionCloseResponsePacker(resourceManager);
         this.sessionOpenResponsePacker = new SessionOpenResponsePacker(resourceManager);

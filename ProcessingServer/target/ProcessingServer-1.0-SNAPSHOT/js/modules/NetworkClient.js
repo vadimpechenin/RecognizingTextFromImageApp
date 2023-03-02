@@ -3,7 +3,7 @@ export default class NetworkClient {
     constructor(parent) {
         this._parent = parent;
         this._serverUrl = 'handler';
-        this._defaultTimeout = 1000000; //миллисек
+        this._defaultTimeout = 30000; //миллисек
     }
 
     #executeCommand(commandName, commandParameters, onSuccess, onError) {
@@ -104,5 +104,21 @@ export default class NetworkClient {
             commandParameters.append("file1", file);
         }
         this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
+    }
+
+    commandSave(documentTitle, file,  resultFile, onSuccess, onError) {
+        let command = "SAVE_DOCUMENT";
+        let commandParameters = new FormData();
+        commandParameters.append("fileCount", 3);
+        if (file) {
+            commandParameters.append("file1", file);
+        }
+        if (resultFile) {
+            commandParameters.append("file2", resultFile);
+        }
+        if (documentTitle) {
+            commandParameters.append("file3", documentTitle);
+        }
+        this.#executeCommand(command, commandParameters, onSuccess, onError);
     }
 }

@@ -4,6 +4,7 @@ import CommonUtils from "../CommonUtils.js";
 
 let fileToRecognize;
 let recognitionFile;
+let recognition = 1;
 
 export default class MainServicePageController {
 
@@ -62,18 +63,37 @@ export default class MainServicePageController {
         if ((fileToRecognize != null) && (recognitionFile != null)) {
             let title = document.getElementById('inputTitle').value;
             if (title != null) {
-                alert('Сохранено');
+                if (recognition === 0){
+                    this._network.commandSave(title, fileToRecognize, recognitionFile, MainServicePageController.#onSavePassed, MainServicePageController.#onSaveFailed)
+                }else{
+                    alert('Текущий документ уже сохранен');
+                }
+            }else{
+                alert('Введите название');
             }
+        }else{
+            alert('Выберите файл или распознайте его');
         }
     }
 
     static #onRecognitionPassed(data){
         recognitionFile = null;
         recognitionFile = new Blob([data.value], {type: 'text/plain'});
+        alert('Документ распознан');
+        recognition = 0;
     }
 
     static #onRecognitionFailed(){
         alert('Не удалось распознать документ');
+    }
+
+    static #onSavePassed(){
+        recognition = 1;
+        alert('Запись сохранена');
+    }
+
+    static #onSaveFailed(){
+        alert('Не удалось сохранить документ');
     }
 }
 

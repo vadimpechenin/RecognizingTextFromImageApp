@@ -1,9 +1,12 @@
 package core.documentManager;
 
 import classes.Session;
+import core.CommonUtils;
 import core.SessionManager;
 import db.DocumentManagerService;
 import dbclasses.Document;
+import dbclasses.User;
+import dbclasses.UserRole;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.util.*;
@@ -72,5 +75,12 @@ public class DocumentManager {
             }
         }
         return result;
+    }
+
+
+    public void save(Document document) {
+        document.setId(CommonUtils.createID());
+
+        service.createDocument(document);
     }
 }

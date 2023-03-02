@@ -63,8 +63,6 @@ public class SecurityManager {
     }
 
     public void registration(User user) {
-        boolean result = true;
-
         user.setId(CommonUtils.createID());
         user.setUsername(user.getUsername().trim().toLowerCase());
         user.setPassword(user.getPassword().trim());
