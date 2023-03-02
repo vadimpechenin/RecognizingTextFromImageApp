@@ -12,7 +12,7 @@ import java.util.List;
 public class TextRecognitionHandler {
     private static class ResponseData{
         public boolean result;
-        public List<RecognitionDocument> items;
+        public String value;
     }
 
     private final Gson gson;
@@ -38,7 +38,7 @@ public class TextRecognitionHandler {
         return responseData.result;
     }
 
-    public List<RecognitionDocument> getInfos() {
-        return responseData.items;
+    public String getInfos() {
+        return responseData.value;
     }
 }

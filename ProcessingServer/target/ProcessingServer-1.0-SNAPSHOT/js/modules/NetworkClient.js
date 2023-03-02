@@ -3,7 +3,7 @@ export default class NetworkClient {
     constructor(parent) {
         this._parent = parent;
         this._serverUrl = 'handler';
-        this._defaultTimeout = 30000; //миллисек
+        this._defaultTimeout = 1000000; //миллисек
     }
 
     #executeCommand(commandName, commandParameters, onSuccess, onError) {

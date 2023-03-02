@@ -106,17 +106,17 @@ public class RecognizeTextClient {
     public boolean recognitionText(List<byte[]> inputDocument, RecognitionDocument calculateResult) {
         String parameters = textRecognitionHandler.getRequestParameters(inputDocument);
         //Заглушка
-        try(FileInputStream fin=new FileInputStream("D://JAVA//Programms//RecognizingTextFromImageApp//Data//text//slaids.docx"))
+/*        try(FileInputStream fin=new FileInputStream("D://JAVA//Programms//RecognizingTextFromImageApp//Data//text//slaids.docx"))
         {
             System.out.printf("File size: %d bytes \n", fin.available());
             byte[] buffer = new byte[fin.available()];
             // считаем файл в буфер
             fin.read(buffer, 0, fin.available());
-           /* int i=-1;
+           *//* int i=-1;
             while((i=fin.read())!=-1){
 
                 System.out.print((char)i);
-            }*/
+            }*//*
             calculateResult.setValue(buffer);
             return true;
         }
@@ -124,11 +124,11 @@ public class RecognizeTextClient {
 
             System.out.println(ex.getMessage());
             return false;
-        }
+        }*/
 
-      /*  String response = executeOperation(CalculateServerRequestCode.RECOGNIZE_TEXT, parameters);
+        String response = executeOperation(CalculateServerRequestCode.RECOGNIZE_TEXT, parameters);
         if(!textRecognitionHandler.parseResponse(response)) return false;
         calculateResult.setValue(textRecognitionHandler.getInfos());
-        return textRecognitionHandler.getResult();*/
+        return textRecognitionHandler.getResult();
     }
 }

@@ -14,7 +14,7 @@ class ConvertPdfToTextCalculator:
         image = ConvertPdfToTextCalculator.__getImages(pdfDocument, parameters)
         items = ConvertPdfToTextCalculator.__recognitionText(pdfDocument, parameters)
         itemshex = ConvertPdfToTextCalculator.__convertToHex(items, parameters)
-        result = {'result': (items is not None), 'text': itemshex}
+        result = {'result': (items is not None), 'value': itemshex}
         return result
 
     @staticmethod
