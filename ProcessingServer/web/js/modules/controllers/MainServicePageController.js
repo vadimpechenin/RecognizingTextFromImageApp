@@ -4,6 +4,7 @@ import CommonUtils from "../CommonUtils.js";
 
 let fileToRecognize;
 let recognitionFile;
+let recognitionFileB;
 let recognition = 1;
 
 export default class MainServicePageController {
@@ -60,7 +61,7 @@ export default class MainServicePageController {
     }
 
     #makeSave() {
-        if ((fileToRecognize != null) && (recognitionFile != null)) {
+        if ((fileToRecognize != null) && (recognitionFileB != null)) {
             let title = document.getElementById('inputTitle').value;
             if (title != null) {
                 if (recognition === 0){
@@ -78,7 +79,9 @@ export default class MainServicePageController {
 
     static #onRecognitionPassed(data){
         recognitionFile = null;
-        recognitionFile = new Blob([data.value], {type: 'text/plain'});
+        recognitionFileB = CommonUtils.hexToBytes(data.value);
+        let bytes = CommonUtils.BytesToViewBytes(recognitionFileB);
+        recognitionFile = new Blob([bytes], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
         alert('Документ распознан');
         recognition = 0;
     }

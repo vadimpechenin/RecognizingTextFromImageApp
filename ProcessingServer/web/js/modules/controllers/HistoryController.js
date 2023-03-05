@@ -4,9 +4,9 @@ import Document from "../entities/Document.js";
 import DocumentWithoutFile from "../entities/DocumentWithoutFile.js";
 
 let documentsArray;
-let documentWithFile
-let pdfFile
-let resultFile
+let documentWithFile;
+let pdfFile;
+let resultFile;
 
 export default class HistoryController {
     constructor() {
@@ -65,9 +65,10 @@ export default class HistoryController {
             data.documents[0].title,
             data.documents[0].filepdf,
             data.documents[0].filetext);
-        //TODO - заменить на просто файлы с сервера, уже не в массиве байт
-        pdfFile = new Blob([documentWithFile.filepdf], { type: 'application/pdf' });
-        resultFile = new Blob([documentWithFile.filetext], {type: 'text/plain'});
+        let bytesPDF = CommonUtils.BytesToViewBytes(documentWithFile.filepdf);
+        pdfFile = new Blob([bytesPDF], { type: 'application/pdf' });
+        let bytesText = CommonUtils.BytesToViewBytes(documentWithFile.filetext);
+        resultFile = new Blob([bytesText], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
         createIframe(pdfFile)
         alert('Готово');
     }
@@ -80,7 +81,6 @@ export default class HistoryController {
         if (pdfFile != null) {
             let fileURL = URL.createObjectURL(pdfFile);
             console.log(fileURL);
-
             let anchor = document.createElement('a');
             anchor.href = fileURL;
             anchor.download = documentWithFile.title + '.pdf';
@@ -114,6 +114,16 @@ export default class HistoryController {
 
 //функция обработки pdf-файлов:
 const createIframe = pdf => {
+    /*const h1 = document.querySelector('iframe')
+
+    const parent = h1.parentNode
+
+    parent.removeChild(h1)*/
+    if (document.querySelector("iframe")!=null){
+        const h1 = document.querySelector("iframe")
+        const parent = h1.parentNode
+        parent.removeChild(h1);
+    }
     const iframe = document.createElement('iframe');
     iframe.src = URL.createObjectURL(pdf);
     iframe.width = innerWidth;
