@@ -19,6 +19,7 @@ export default class MainServicePageController {
         CommonUtils.getContainer('Recognized').click(this.#makeRecognition.bind(this));
         CommonUtils.getContainer('Download').click(this.#makeDownload.bind(this));
         CommonUtils.getContainer('Save').click(this.#makeSave.bind(this));
+        CommonUtils.getContainer('resetButton').click(this.#makeReset.bind(this));
     }
 
     #onExit(){
@@ -57,7 +58,26 @@ export default class MainServicePageController {
                 CommonUtils.downloadDOCX(recognitionFile, title);
             }
         }
+    }
 
+    #makeReset() {
+        let deleteElement = document.getElementById('iframe');
+
+        if(deleteElement!=null) {
+            deleteElement.remove();
+        }
+        let deleteElement2 = document.getElementById('audio');
+            if(deleteElement2!=null) {
+                deleteElement2.remove();
+                let deleteElementView2 = document.getElementById('audioView');
+                deleteElement2.remove();
+            }
+        let element = document.getElementById('loadContent');
+        let div = document.createElement('div');
+        div.className = "loadFile";
+        div.id = 'loadFile';
+        div.innerHTML = "+";
+        element.appendChild(div);
     }
 
     #makeSave() {
@@ -180,9 +200,17 @@ export default class MainServicePageController {
         const audioEl = D.createElement('audio')
         audioEl.setAttribute('controls', '')
         audioEl.src = URL.createObjectURL(audio)
+        audioEl.id = "audio";
         log(audioEl)
-        B.append(audioEl)
-        audioEl.play()
+        let element = document.getElementById('loadContent');
+        element.appendChild(audioEl);
+        let anchor = document.createElement('audioView');
+        anchor.src = audioEl.src;
+        anchor.id = "audio";
+        document.body.append(anchor);
+        //<audio id="audio" src="./audio/treck1.mp3" controls></audio>
+        //B.append(audioEl)
+        //audioEl.play()
         URL.revokeObjectURL(audio)
     }
 //Функция обработки видео:
