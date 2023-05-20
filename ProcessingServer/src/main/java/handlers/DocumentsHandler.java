@@ -32,10 +32,30 @@ public class DocumentsHandler extends RequestHandlerContainer {
         this.sessionManager = sessionManager;
         this.documentManager = documentManager;
         register(RequestCode.RECOGNIZE_DOCUMENT.toString(), this::DocumentRecognize);
+        register(RequestCode.RECOGNIZE_AUDIO_DOCUMENT.toString(), this::AudioDocumentRecognize);
         register(RequestCode.SAVE_DOCUMENT.toString(), this::DocumentSave);
     }
 
     private boolean DocumentRecognize(ResponseRecipient responseRecipient, Request requestBase) {
+        RequestWithAttachments request = (RequestWithAttachments) requestBase;
+        boolean result;
+
+        Session session = sessionManager.getSession(request.sessionID);
+        session.lastActivityTime = Clock.systemDefaultZone().instant();
+
+        RecognizeTextClient recognizeTextClient = new RecognizeTextClient();
+        RecognitionDocument calculateResult = new RecognitionDocument();
+
+        result = recognizeTextClient.recognitionText(request.attachments, calculateResult);
+        Response response = new ObjectResponse(request.code, request.sessionID, result, calculateResult);
+
+        if (responseRecipient != null) {
+            responseRecipient.ReceiveResponse(response);
+        }
+        return result;
+    }
+
+    private boolean AudioDocumentRecognize(ResponseRecipient responseRecipient, Request requestBase) {
         RequestWithAttachments request = (RequestWithAttachments) requestBase;
         boolean result;
 

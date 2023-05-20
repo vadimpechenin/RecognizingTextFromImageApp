@@ -22,9 +22,9 @@ import java.util.Map;
  */
 @WebServlet(name = "MainServlet", urlPatterns = "/handler")
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 5,
-        maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 6
+        fileSizeThreshold = 1024 * 1024 * 8,
+        maxFileSize = 1024 * 1024 * 8,
+        maxRequestSize = 1024 * 1024 * 9
 )
 public class MainServlet extends HttpServlet {
 
@@ -133,6 +133,7 @@ public class MainServlet extends HttpServlet {
 
                 RequestHandler documentsHandler = new DocumentsHandler(environment.sessionManager, environment.documentManager);
                 register(RequestCode.RECOGNIZE_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.objectResponsePacker);
+                register(RequestCode.RECOGNIZE_AUDIO_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.objectResponsePacker);
                 register(RequestCode.SAVE_DOCUMENT, documentsHandler, environment.requestWithAttachmentsExtractor, environment.baseResponsePacker);
             }
         } catch (Exception e) {

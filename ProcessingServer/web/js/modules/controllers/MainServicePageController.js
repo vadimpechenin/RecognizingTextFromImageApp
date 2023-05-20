@@ -6,6 +6,7 @@ let fileToRecognize;
 let recognitionFile;
 let recognitionFileB;
 let recognition = 1;
+let fileType = 0;
 
 export default class MainServicePageController {
 
@@ -41,8 +42,14 @@ export default class MainServicePageController {
     #makeRecognition() {
         if (fileToRecognize != null) {
             let title = document.getElementById('inputTitle').value;
+            console.log('This file size is: ' + fileToRecognize.size / 1024 / 1024 + "MiB");
             if (title!= null) {
-                this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onRecognitionPassed, MainServicePageController.#onRecognitionFailed)
+                if (fileType == 1) {
+                    this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onRecognitionPassed, MainServicePageController.#onRecognitionFailed)
+                }
+                if (fileType == 2) {
+                    this._network.commandRecognitionSound(title, fileToRecognize, MainServicePageController.#onRecognitionPassed, MainServicePageController.#onRecognitionFailed)
+                }
             }else{
                 alert('Введите название');
             }
@@ -158,6 +165,7 @@ export default class MainServicePageController {
             return;
 
         if (file.type === 'application/pdf') {
+            fileType = 1;
             createIframe(file)
             return;
         }
@@ -170,6 +178,7 @@ export default class MainServicePageController {
                 createImage(file)
                 break;
             case 'audio':
+                fileType = 2;
                 createAudio(file)
                 break;
             case 'video':

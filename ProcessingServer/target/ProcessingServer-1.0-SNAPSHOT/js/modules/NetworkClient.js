@@ -44,14 +44,17 @@ export default class NetworkClient {
         let parameters = commandParameters;
         if (parameters instanceof FormData) {
             parameters.append("cmd", commandName);
+            console.log('3 Добавлена команда');
+            console.log(commandName);
             query.data = parameters;
             query.processData = false;
             query.contentType = false;
+            console.log('5 Успешно добавлены параметры в запрос');
         } else {
             parameters.cmd = commandName;
             query.data = parameters;
         }
-
+        console.log(query.data);
         let response = $.ajax(query);
 
         function onSuccessResult(data) {
@@ -102,10 +105,25 @@ export default class NetworkClient {
         commandParameters.append("fileCount", 1);
         if (file) {
             commandParameters.append("file1", file);
+            console.log('Добавлено в formData');
         }
+        console.log('2 Создаем запрос с командой');
+        console.log(command);
         this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
     }
 
+    commandRecognitionSound(documentTitle, file,  onSuccess, onError) {
+        let command = "RECOGNIZE_AUDIO_DOCUMENT";
+        let commandParameters = new FormData();
+        commandParameters.append("fileCount", 1);
+        if (file) {
+            commandParameters.append("file1", file);
+            console.log('Добавлено в formData');
+        }
+        console.log('2 Создаем запрос с командой');
+        console.log(command);
+        this.#executeCommandWihtResult(command, commandParameters, onSuccess, onError);
+    }
     commandSave(documentTitle, file,  resultFile, onSuccess, onError) {
         let command = "SAVE_DOCUMENT";
         let commandParameters = new FormData();
