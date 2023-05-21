@@ -65,7 +65,7 @@ public class DocumentsHandler extends RequestHandlerContainer {
         RecognizeTextClient recognizeTextClient = new RecognizeTextClient();
         RecognitionDocument calculateResult = new RecognitionDocument();
 
-        result = recognizeTextClient.recognitionText(request.attachments, calculateResult);
+        result = recognizeTextClient.recognitionAudio(request.attachments, calculateResult);
         Response response = new ObjectResponse(request.code, request.sessionID, result, calculateResult);
 
         if (responseRecipient != null) {

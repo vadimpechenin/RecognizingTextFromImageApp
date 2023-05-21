@@ -42,7 +42,6 @@ export default class MainServicePageController {
     #makeRecognition() {
         if (fileToRecognize != null) {
             let title = document.getElementById('inputTitle').value;
-            console.log('This file size is: ' + fileToRecognize.size / 1024 / 1024 + "MiB");
             if (title!= null) {
                 if (fileType == 1) {
                     this._network.commandRecognition(title, fileToRecognize, MainServicePageController.#onRecognitionPassed, MainServicePageController.#onRecognitionFailed)
