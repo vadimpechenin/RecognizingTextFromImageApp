@@ -7,6 +7,7 @@ let documentsArray;
 let documentWithFile;
 let pdfFile;
 let resultFile;
+let fileType = 0;
 
 export default class HistoryController {
     constructor() {
@@ -17,6 +18,8 @@ export default class HistoryController {
     init() {
         CommonUtils.getContainer('ReturnToMain').click(HistoryController.#onExit.bind(this));
         CommonUtils.getContainer('SelectDocument').click(this.#selectDocument.bind(this));
+        //TODO временное плохое решение - отдельная кнопка на загрузку аудио документа. Нужно предусмотреть тип документа в БД, 1 и 2 например
+        CommonUtils.getContainer('SelectAudionDocument').click(this.#selectAudioDocument.bind(this));
         CommonUtils.getContainer('DownloadPDF').click(HistoryController.#downloadPDF.bind(this));
         CommonUtils.getContainer('DownloadDOCX').click(HistoryController.#downloadDOCX.bind(this));
     }
@@ -38,6 +41,21 @@ export default class HistoryController {
     }
 
     #selectDocument(){
+        fileType = 0;
+        let radio = document.querySelectorAll('.i-1');
+        let data = '';
+        for (let i=0; i<radio.length; i++){
+            if (radio[i].checked){
+                data = radio[i].value;
+                break;
+            }
+        }
+        console.log(data)
+        this._network.commandLoadDocument(data, HistoryController.#onLoadDocumentPassed, HistoryController.#onLoadDocumentFailed);
+    }
+
+    #selectAudioDocument(){
+        fileType = 1;
         let radio = document.querySelectorAll('.i-1');
         let data = '';
         for (let i=0; i<radio.length; i++){
@@ -66,9 +84,15 @@ export default class HistoryController {
             data.documents[0].filepdf,
             data.documents[0].filetext);
         let bytesPDF = CommonUtils.BytesToViewBytes(documentWithFile.filepdf);
-        pdfFile = new Blob([bytesPDF], { type: 'application/pdf' });
+        if (fileType==0){
+            pdfFile = new Blob([bytesPDF], { type: 'application/pdf' });
+        }else if (fileType==1){
+            pdfFile = new Blob([bytesPDF], { type: 'audio/wav' });
+        }
+
         let bytesText = CommonUtils.BytesToViewBytes(documentWithFile.filetext);
         resultFile = new Blob([bytesText], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+
         createIframe(pdfFile)
         alert('Готово');
     }
@@ -83,7 +107,11 @@ export default class HistoryController {
             console.log(fileURL);
             let anchor = document.createElement('a');
             anchor.href = fileURL;
+            if (fileType==0){
             anchor.download = documentWithFile.title + '.pdf';
+            }else if (fileType==1){
+                anchor.download = documentWithFile.title + '.wav';
+            }
             document.body.append(anchor);
             anchor.style = "display none";
             anchor.click();
@@ -111,25 +139,30 @@ export default class HistoryController {
     }
 }
 
-
 //функция обработки pdf-файлов:
 const createIframe = pdf => {
-    /*const h1 = document.querySelector('iframe')
-
-    const parent = h1.parentNode
-
-    parent.removeChild(h1)*/
     if (document.querySelector("iframe")!=null){
         const h1 = document.querySelector("iframe")
         const parent = h1.parentNode
         parent.removeChild(h1);
     }
     const iframe = document.createElement('iframe');
-    iframe.src = URL.createObjectURL(pdf);
-    iframe.width = innerWidth;
-    iframe.height = innerHeight;
-    console.log(iframe);
-    let element = document.getElementById('content');
-    element.appendChild(iframe);
+    if (fileType==0){
+        iframe.src = URL.createObjectURL(pdf);
+        iframe.width = innerWidth;
+        iframe.height = innerHeight;
+        console.log(iframe);
+        let element = document.getElementById('content');
+        element.appendChild(iframe);
+    }else if (fileType==1){
+        iframe.setAttribute('controls', '')
+        iframe.src = URL.createObjectURL(pdf)
+        console.log(iframe)
+        let element = document.getElementById('content');
+        element.appendChild(iframe);
+        let anchor = document.createElement('audioView');
+        anchor.src = iframe.src;
+        document.body.append(anchor);
+    }
     URL.revokeObjectURL(pdf);
 }
