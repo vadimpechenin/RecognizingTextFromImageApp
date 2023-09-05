@@ -5,12 +5,9 @@ import core.CommonUtils;
 import core.SessionManager;
 import db.DocumentManagerService;
 import dbclasses.Document;
-import dbclasses.User;
-import dbclasses.UserRole;
-import org.apache.commons.lang3.SerializationUtils;
+
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Менеджер для работы с сущностью Document

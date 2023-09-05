@@ -139,7 +139,6 @@ export default class HistoryController {
     }
 }
 
-
 //функция обработки pdf-файлов:
 const createIframe = pdf => {
     if (document.querySelector("iframe")!=null){

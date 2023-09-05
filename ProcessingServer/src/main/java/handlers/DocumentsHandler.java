@@ -1,25 +1,19 @@
 package handlers;
 
 import classes.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import core.SessionManager;
 import core.documentManager.DocumentManager;
 import core.interaction.Request;
 import core.interaction.RequestHandlerContainer;
 import core.interaction.Response;
 import core.interaction.ResponseRecipient;
-import core.interaction.requests.EditContentRequest;
 import core.interaction.requests.RequestWithAttachments;
 import core.interaction.responses.ObjectResponse;
-import core.recognitionClient.ConverterUtils;
 import core.recognitionClient.RecognizeTextClient;
 import dbclasses.Document;
-import dbclasses.User;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
